@@ -1,0 +1,20 @@
+{
+    "name": "dm/ajaxcom",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Miroslav Demovic",
+            "email": "miroslav@demovic.sk"
+        },
+        {
+            "name": "Nick Masters",
+            "email": "nick@npmasters.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+        "psr-0": { "DM\\": "src/" }
+    }
+}
