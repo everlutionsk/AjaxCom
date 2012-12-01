@@ -49,7 +49,7 @@
     // Handle click events
     //
     // Exported as $.ajaxcom.click
-    function handleClick(event, container, options)
+    function handleClick(event, options)
     {
         // Middle, cmd, ctrl, shift, alt clicks shouod open in a new tab as normal
         if (event.which>1 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
@@ -57,8 +57,10 @@
         }
 
         var link = event.currentTarget;
+
+        // Ignore non anchor elements
         if (link.tagName.toUpperCase()!=='A') {
-            throw "$.fn.ajaxcom requires an anchor element";
+            return;
         }
 
         // Ignore external links
@@ -88,9 +90,24 @@
     // Handle submit events
     //
     // Exported as $.ajaxcom.submit
-    function handleSubmit(event, container, options)
+    function handleSubmit(event, options)
     {
-        console.warn('handleSubmit is not yet implemented');
+        var form = event.currentTarget;
+
+        // Ignore nonform elements
+        if (form.tagName.toUpperCase()!=='FORM') {
+            return;
+        }
+
+        var defaults = {
+            type: form.method,
+            url: form.action,
+            data: $(form).serializeArray()
+        }
+
+        ajaxcom($.extend({}, defaults, options));
+
+        event.preventDefault();
     }
 
     // Delegates operations to their handler
@@ -116,17 +133,17 @@
 
     // Handle modals
     function handleModal(options) {
-        console.warn('doModal is not yet implement');
+        console.warn('handleModal is not yet implement');
     }
 
     // Handle change urls
     function handleChangeUrl(options) {
-        console.warn('doChangeUrl is not yet implement');
+        console.warn('handleChangeUrl is not yet implement');
     }
 
     // Handle callbacks
     function handleCallback(options) {
-        console.warn('doCallback is not yet implement');
+        console.warn('handleCallback is not yet implement');
     }
 
     // Handle containers

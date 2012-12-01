@@ -8,10 +8,15 @@
     <body>
         <a href="/example/index.php">Link</a>
         <div id="1234">
-        test
+            test
         </div>
+        <form method="POST" action="/example/index.php">
+            <input type="text" value="fggfg" name="dfdfdf" />
+            <input type="submit" value="Submit" />
+        </form>
         <script>
             $(document).ajaxcom('a');
+            $(document).ajaxcom('form');
         </script>
     </body>
 </html>
