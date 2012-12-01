@@ -9,6 +9,11 @@ class Container extends ResponseObjectAbstract
 
     const OBJECT_IDENTIFIER = 'container';
 
+    const OPTION_VALUE = 'value';
+    const OPTION_TARGET = 'target';
+    const OPTION_METHOD = 'method';
+
+
     /**
      * Constructor
      *
@@ -19,11 +24,12 @@ class Container extends ResponseObjectAbstract
     public function __construct($identifier=null)
     {
      
-        $this->registerOption('html');
-        $this->registerOption('target');
-      
+        $this->registerOption(self::OPTION_VALUE);
+        $this->registerOption(self::OPTION_TARGET);
+        $this->registerOption(self::OPTION_METHOD);
+
         if ($identifier) {
-            $this->setOption('target', $identifier);
+            $this->setOption(self::OPTION_TARGET, $identifier);
         }
     }
 
@@ -44,12 +50,14 @@ class Container extends ResponseObjectAbstract
 
     public function html($html)
     {   
-        $this->setOption('html', 'dasf');
-        
+        $this->setOption(self::OPTION_VALUE, $html);
+        $this->setOption(self::OPTION_METHOD, 'html');
+        return $this;
     }
 
     public function val($html)
     {
+        $this->setOption('');
     }
   
     public function remove()
