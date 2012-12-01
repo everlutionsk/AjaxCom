@@ -2,7 +2,6 @@
 
 namespace DM\AjaxCom;
 
-use DM\AjaxCom\Responder\ResponseObjectInterface;
 use DM\AjaxCom\Responder\Container\FlashMessage;
 use DM\AjaxCom\Responder\Container\Container;
 use DM\AjaxCom\Responder\ChangeUrl;
@@ -27,7 +26,7 @@ class Handler
      * @var ResponderInterface $responder
      * @return Handler
      */
-    public function register(ResponseObjectInterface $responder)
+    public function register(ResponderInterface $responder)
     {
         $this->queue[] = $responder;
         return $this;
@@ -39,7 +38,7 @@ class Handler
      * @var ResponderInterface $responder
      * @return Handler
      */
-    public function unregister(ResponseObjectInterface $responder)
+    public function unregister(ResponderInterface $responder)
     {
         $key = array_search($responder, $this->queue, true);
         if($key!==false) {
