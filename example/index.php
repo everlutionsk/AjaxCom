@@ -1,8 +1,8 @@
 <?php
 
-require '../src/DM/AjaxCom/Handler.php';
+require_once('../vendor/autoload.php');
 
 use DM\AjaxCom\Handler;
 
 $handler = new Handler();
-$handler->respond();
+echo $handler->respond();

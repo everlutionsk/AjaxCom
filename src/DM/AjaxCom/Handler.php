@@ -2,9 +2,10 @@
 
 namespace DM\AjaxCom;
 
-use Responder\Container\FlashMessage;
-use Responder\Container\Container;
-use Responder\Modal;
+use DM\AjaxCom\Responder\Container\FlashMessage;
+use DM\AjaxCom\Responder\Container\Container;
+use DM\AjaxCom\Responder\Modal;
+use DM\AjaxCom\Helper\Response; 
 
 class Handler
 {
@@ -120,7 +121,7 @@ class Handler
                                             'value' => 'my new HTML',
                                             );
         
-        $response[self::TYPE_CONTAINER][] = $containerObject;
+        $response[] = $containerObject;
         
 
         $animationObject = new \stdClass();
@@ -137,7 +138,7 @@ class Handler
                                             'value' => 'my new HTML',
                                             );
         
-        $response[self::TYPE_CONTAINER][] = $containerObject2;
+        $response[] = $containerObject2;
 
 
         $containerObject3 = new \stdClass();
@@ -148,14 +149,27 @@ class Handler
                                             );
         
 
-        $response[self::TYPE_MODAL][] = $containerObject3;
+        $response[] = $containerObject3;
 
-        $response[self::TYPE_CALLBACK] = 'function name';
-
-        $response[self::TYPE_CHANGEURL] = 'new url';
-
+        $callback = new \stdClass();
+        $callback->operation = 'callback';
+        $callback->options = array(
+                                            'function' => 'name'
+                                            );
         
-        echo json_encode($response);
+        $response[] = $callback;
+
+
+        $changeUrl = new \stdClass();
+        $changeUrl->operation = 'changeurl';
+        $changeUrl->options = array(
+                                            'url' => 'name',
+                                            'wait' => '123' //number of seconds to wait before redirect
+                                            );
+        
+        $response[] = $changeUrl;
+
+        return Response::json(array('ajaxcom'=>$response));
     }
 
 }
