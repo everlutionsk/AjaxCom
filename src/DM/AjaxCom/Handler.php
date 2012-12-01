@@ -2,13 +2,18 @@
 
 namespace DM\AjaxCom;
 
-use Responder\ResponderInterface;
 use Responder\Container\FlashMessage;
 use Responder\Container\Container;
 use Responder\Modal;
 
 class Handler
 {
+
+    const TYPE_CONTAINER = 'containers';
+    const TYPE_MODAL = 'modals';
+    const TYPE_CALLBACK = 'callback';
+    const TYPE_CHANGEURL = 'changeurl';
+
     /**
      * Collection of ResponderInterface objects
      *
@@ -97,4 +102,61 @@ class Handler
     public function changeUrl($url)
     {
     }
+
+    /**
+     * Generates respond
+     * @return 
+     */
+
+    public function respond()
+    {
+
+        $response = array();
+        $containerObject = new \stdClass();
+        $containerObject->operation = 'container';
+        $containerObject->options = array(
+                                            'target' => '#1234',
+                                            'method' => 'append', //append, prepend, remove, replace
+                                            'value' => 'my new HTML',
+                                            );
+        
+        $response[self::TYPE_CONTAINER][] = $containerObject;
+        
+
+        $animationObject = new \stdClass();
+        $animationObject->removeAfter = 0; //0=sticky, (int) milliseconds
+
+
+
+        $containerObject2 = new \stdClass();
+        $containerObject2->operation = 'container';
+        $containerObject2->options = array(
+                                            'target' => '#1234',
+                                            'method' => 'append', //append, prepend
+                                            'animation' => $animationObject,
+                                            'value' => 'my new HTML',
+                                            );
+        
+        $response[self::TYPE_CONTAINER][] = $containerObject2;
+
+
+        $containerObject3 = new \stdClass();
+        $containerObject3->operation = 'modal';
+        $containerObject3->options = array(
+                                            'target' => '#id_of_modal',
+                                            'value' => 'my new HTML',
+                                            );
+        
+
+        $response[self::TYPE_MODAL][] = $containerObject3;
+
+        $response[self::TYPE_CALLBACK] = 'function name';
+
+        $response[self::TYPE_CHANGEURL] = 'new url';
+
+        
+        echo json_encode($response);
+    }
+
 }
+
