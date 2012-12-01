@@ -12,6 +12,7 @@ class Container extends ResponseObjectAbstract
     const OPTION_VALUE = 'value';
     const OPTION_TARGET = 'target';
     const OPTION_METHOD = 'method';
+    const OPTION_ANIMATE = 'animate';
 
     /**
      * Constructor
@@ -23,10 +24,13 @@ class Container extends ResponseObjectAbstract
         $this->registerOption(self::OPTION_VALUE);
         $this->registerOption(self::OPTION_TARGET);
         $this->registerOption(self::OPTION_METHOD);
+        $this->registerOption(self::OPTION_ANIMATE);
 
         if ($identifier) {
             $this->setOption(self::OPTION_TARGET, $identifier);
         }
+
+        $this->animate();
     }
 
     /**
@@ -103,6 +107,19 @@ class Container extends ResponseObjectAbstract
     public function remove()
     {
         $this->setOption(self::OPTION_METHOD, 'remove');
+        return $this;
+    }
+
+    
+    /**
+     * Enable/disable animation effect
+     *
+     * @var bool $enable
+     * @return \Container
+     */
+    public function animate($enable = true)
+    {
+        $this->setOption(self::OPTION_ANIMATE, (bool) $enable);
         return $this;
     }
 }
