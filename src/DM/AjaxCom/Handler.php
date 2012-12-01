@@ -8,7 +8,8 @@ use DM\AjaxCom\Responder\Container\Container;
 use DM\AjaxCom\Responder\ChangeUrl;
 use DM\AjaxCom\Responder\Callback;
 use DM\AjaxCom\Responder\Modal;
-use DM\AjaxCom\Helper\Response; 
+use DM\AjaxCom\Helper\Response;
+use DM\AjaxCom\Responder\ResponderInterface;
 
 class Handler
 {
@@ -40,6 +41,10 @@ class Handler
      */
     public function unregister(ResponseObjectInterface $responder)
     {
+        $key = array_search($responder, $this->queue, true);
+        if($key) {
+            unset($this->queue[$key]);
+        }
         return $this;
     }
 
@@ -120,7 +125,8 @@ class Handler
 
     /**
      * Generates response
-     * @return 
+     *
+     * @return
      */
 
     public function respond()

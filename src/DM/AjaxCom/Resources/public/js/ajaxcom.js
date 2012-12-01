@@ -1,6 +1,7 @@
 // ajaxcom.js
 // https://github.com/advertize/AjaxCom
 (function($) {
+    "use strict";
     // Intercept click and submit events and perform an ajax request then
     // handle instructions returned
     //
@@ -8,7 +9,6 @@
     //
     // Returns the jQuery object
     function fnAjaxcom(selector, options) {
-        var context = this;
         this.on('click', selector, function(event) {
             var opts = $.extend({}, options);
             handleClick(event, opts);
@@ -51,7 +51,7 @@
     // Exported as $.ajaxcom.click
     function handleClick(event, options)
     {
-        // Middle, cmd, ctrl, shift, alt clicks shouod open in a new tab as normal
+        // Middle, cmd, ctrl, shift, alt clicks should open in a new tab as normal
         if (event.which>1 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
             return;
         }
