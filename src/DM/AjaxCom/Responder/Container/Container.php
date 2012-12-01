@@ -35,17 +35,23 @@ class Container extends ResponseObjectAbstract
 
     public function append($html)
     {
-    
+        $this->setOption(self::OPTION_VALUE, $html);
+        $this->setOption(self::OPTION_METHOD, 'append');
+        return $this;
     }
 
     public function prepend($html)
     {
-        
+        $this->setOption(self::OPTION_VALUE, $html);
+        $this->setOption(self::OPTION_METHOD, 'prepend');
+        return $this;
     }
 
     public function replaceWith($html)
     {
-    
+        $this->setOption(self::OPTION_VALUE, $html);
+        $this->setOption(self::OPTION_METHOD, 'replaceWith');
+        return $this;
     }
 
     public function html($html)
@@ -57,12 +63,15 @@ class Container extends ResponseObjectAbstract
 
     public function val($html)
     {
-        $this->setOption('');
+        $this->setOption(self::OPTION_VALUE, $html);
+        $this->setOption(self::OPTION_METHOD, 'val');
+        return $this;
     }
   
     public function remove()
     {
-            
+        $this->setOption(self::OPTION_METHOD, 'remove');
+        return $this;
     }
 
 

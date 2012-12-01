@@ -6,6 +6,6 @@ use DM\AjaxCom\Handler;
 
 $handler = new Handler();
 
-$handler->container('#xyds')->html('<b>dafs</b>');
+$handler->container('#xyds')->append('dfas');
 
 echo $handler->respond();
