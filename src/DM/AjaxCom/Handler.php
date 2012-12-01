@@ -39,7 +39,7 @@ class Handler
     public function unregister(ResponderInterface $responder)
     {
         $key = array_search($responder, $this->queue, true);
-        if($key) {
+        if($key!==false) {
             unset($this->queue[$key]);
         }
         return $this;
