@@ -2,8 +2,11 @@
 
 namespace DM\AjaxCom;
 
+use DM\AjaxCom\Responder\ResponseObjectInterface;
 use DM\AjaxCom\Responder\Container\FlashMessage;
 use DM\AjaxCom\Responder\Container\Container;
+use DM\AjaxCom\Responder\ChangeUrl;
+use DM\AjaxCom\Responder\Callback;
 use DM\AjaxCom\Responder\Modal;
 use DM\AjaxCom\Helper\Response; 
 
@@ -23,8 +26,9 @@ class Handler
      * @var ResponderInterface $responder
      * @return Handler
      */
-    public function register(ResponderInterface $responder)
+    public function register(ResponseObjectInterface $responder)
     {
+        $this->queue[] = $responder;
         return $this;
     }
 
@@ -34,7 +38,7 @@ class Handler
      * @var ResponderInterface $responder
      * @return Handler
      */
-    public function unregister(ResponderInterface $responder)
+    public function unregister(ResponseObjectInterface $responder)
     {
         return $this;
     }
@@ -48,10 +52,10 @@ class Handler
      * @var string $type
      * @return FlashMessage
      */
-    public function flashMessage($message, $type = FlashMessage::SUCCESS)
+    public function flashMessage($message, $type = FlashMessage::TYPE_SUCCESS)
     {
         $message = new FlashMessage($message, $type);
-        $this->queue[] = $message;
+        $this->register($message);
         return $message;
     }
 
@@ -66,7 +70,7 @@ class Handler
     public function container($identifier)
     {
         $container = new Container($identifier);
-        $this->queue[] = $container;
+        $this->register($container);
         return $container;
     }
 
@@ -80,7 +84,7 @@ class Handler
     public function modal()
     {
         $modal = new Modal();
-        $this->queue[] = $modal;
+        $this->register($modal);
         return $modal;
     }
 
@@ -94,8 +98,8 @@ class Handler
      */
     public function callback($function)
     {
-        $callback = new Callback($value);
-        $this->queue[] = $callback();
+        $callback = new Callback($function);
+        $this->register($callback);
         return $callback;
     }
 
@@ -107,10 +111,10 @@ class Handler
      * @var string $url
      * @return ChangeUrl
      */
-    public function changeUrl($url)
+    public function changeUrl($url, $wait=0)
     {
-        $changeUrl = new ChangeUrl($url);
-        $this->queue[] = $changeUrl();
+        $changeUrl = new ChangeUrl($url, $wait);
+        $this->register($changeUrl);
         return $changeUrl;
     }
 

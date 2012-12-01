@@ -13,14 +13,12 @@ class Container extends ResponseObjectAbstract
     const OPTION_TARGET = 'target';
     const OPTION_METHOD = 'method';
 
-
     /**
      * Constructor
      *
      * @param string $identifier
      */
     
-     
     public function __construct($identifier=null)
     {
      
@@ -32,6 +30,14 @@ class Container extends ResponseObjectAbstract
             $this->setOption(self::OPTION_TARGET, $identifier);
         }
     }
+    
+    
+    /**
+     * Append html to container
+     *
+     * @var string $html
+     * @return \Container
+     */
 
     public function append($html)
     {
@@ -40,6 +46,12 @@ class Container extends ResponseObjectAbstract
         return $this;
     }
 
+    /**
+     * Prepend html to container
+     *
+     * @var string $html
+     * @return \Container
+     */
     public function prepend($html)
     {
         $this->setOption(self::OPTION_VALUE, $html);
@@ -47,6 +59,12 @@ class Container extends ResponseObjectAbstract
         return $this;
     }
 
+    /**
+     * Replace container html with this html
+     *
+     * @var string $html
+     * @return \Container
+     */
     public function replaceWith($html)
     {
         $this->setOption(self::OPTION_VALUE, $html);
@@ -54,6 +72,12 @@ class Container extends ResponseObjectAbstract
         return $this;
     }
 
+    /**
+     * Sets inner html of container
+     *
+     * @var string $html
+     * @return \Container
+     */
     public function html($html)
     {   
         $this->setOption(self::OPTION_VALUE, $html);
@@ -61,6 +85,12 @@ class Container extends ResponseObjectAbstract
         return $this;
     }
 
+    /**
+     * Set value of container object
+     *
+     * @var string $html
+     * @return \Container
+     */
     public function val($html)
     {
         $this->setOption(self::OPTION_VALUE, $html);
@@ -68,11 +98,15 @@ class Container extends ResponseObjectAbstract
         return $this;
     }
   
+    /**
+     * Remove container
+     *
+     * @return \Container
+     */
     public function remove()
     {
         $this->setOption(self::OPTION_METHOD, 'remove');
         return $this;
     }
-
-
 }
+
