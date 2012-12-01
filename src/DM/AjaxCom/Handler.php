@@ -41,7 +41,7 @@ class Handler
     public function unregister(ResponderInterface $responder)
     {
         $key = array_search($responder, $this->queue, true);
-        if($key!==false) {
+        if ($key!==false) {
             unset($this->queue[$key]);
         }
         return $this;
@@ -115,7 +115,7 @@ class Handler
      * @var string $url
      * @return ChangeUrl
      */
-    public function changeUrl($url, $wait=0)
+    public function changeUrl($url, $wait = 0)
     {
         $changeUrl = new ChangeUrl($url, $wait);
         $this->register($changeUrl);
