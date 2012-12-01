@@ -55,6 +55,9 @@ class Handler
      */
     public function flashMessage($message, $type = FlashMessage::SUCCESS)
     {
+        $message = new FlashMessage($message, $type);
+        $this->queue[] = $message;
+        return $message;
     }
 
     /**
@@ -67,6 +70,9 @@ class Handler
      */
     public function container($identifier)
     {
+        $container = new Container($identifier);
+        $this->queue[] = $container;
+        return $container;
     }
 
     /**
@@ -78,6 +84,9 @@ class Handler
      */
     public function modal()
     {
+        $modal = new Modal();
+        $this->queue[] = $modal;
+        return $modal;
     }
 
     /**
@@ -90,6 +99,9 @@ class Handler
      */
     public function callback($function)
     {
+        $callback = new Callback($value);
+        $this->queue[] = $callback();
+        return $callback;
     }
 
     /**
@@ -102,6 +114,9 @@ class Handler
      */
     public function changeUrl($url)
     {
+        $changeUrl = new ChangeUrl($url);
+        $this->queue[] = $changeUrl();
+        return $changeUrl;
     }
 
     /**
@@ -112,7 +127,7 @@ class Handler
     public function respond()
     {
 
-        $response = array();
+      /*  $response = array();
         $containerObject = new \stdClass();
         $containerObject->operation = 'container';
         $containerObject->options = array(
@@ -166,9 +181,15 @@ class Handler
                                             'url' => 'name',
                                             'wait' => '123' //number of seconds to wait before redirect
                                             );
-        
-        $response[] = $changeUrl;
 
+        $response[] = $changeUrl;
+        */
+   
+        $response = array();
+        foreach ($this->queue as $object) {
+            $response[] = $object->render();
+        }
+        
         return Response::json(array('ajaxcom'=>$response));
     }
 
