@@ -6,17 +6,18 @@
         <script src="/src/DM/AjaxCom/Resources/public/js/ajaxcom.js"></script>
     </head>
     <body>
-        <a href="/example/index.php">Link</a>
+        <a href="/example/index.php" data-ajaxcom>Link</a>
         <div id="1234">
             test
         </div>
-        <form method="POST" action="/example/index.php">
+        <div data-ajaxcom-flashmessage>
+        </div>
+        <form method="POST" action="/example/index.php" data-ajaxcom>
             <input type="text" value="fggfg" name="dfdfdf" />
             <input type="submit" value="Submit" />
         </form>
         <script>
-            $(document).ajaxcom('a');
-            $(document).ajaxcom('form');
+            $(document).ajaxcom('[data-ajaxcom]');
         </script>
     </body>
 </html>
