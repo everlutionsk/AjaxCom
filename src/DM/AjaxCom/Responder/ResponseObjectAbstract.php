@@ -5,6 +5,8 @@ namespace DM\AjaxCom\Responder;
 abstract class ResponseObjectAbstract
 {
 
+    const OBJECT_IDENTIFIER = null;
+
     /**
      * @var array validOptions - container holding valid options for the responseObject
      */
@@ -15,12 +17,6 @@ abstract class ResponseObjectAbstract
      */
     private $operation = null;
     private $options = array();
-
-
-    public function __construct()
-    {
-        $this->operation = $this->setObjectIdentifier();    
-    }
 
 
     /**
@@ -114,14 +110,6 @@ abstract class ResponseObjectAbstract
     }
 
 
-    
-    /**
-     * Set operation identifier
-     *
-     * @return string operation name
-     */
-    abstract protected function setObjectIdentifier();
-
 
     /**
      * Render the opperation item
@@ -131,12 +119,12 @@ abstract class ResponseObjectAbstract
 
     public function render()
     {
-
-        if (empty($this->operation)) {
-            throw new \Exception ('No operation was set');
+    
+        if (!$this::OBJECT_IDENTIFIER) {
+           throw new \Exception ('No operation was set');
         }
 
-        $operation = array( 'opeartion' => $this->operation,
+        $operation = array( 'operation' => $this::OBJECT_IDENTIFIER,
                             'options' => $this->options
                             );
         

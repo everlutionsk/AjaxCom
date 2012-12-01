@@ -7,6 +7,7 @@ use DM\AjaxCom\Responder\ResponseObjectAbstract;
 class Container extends ResponseObjectAbstract
 {
 
+    const OBJECT_IDENTIFIER = 'container';
 
     /**
      * Constructor
@@ -18,31 +19,12 @@ class Container extends ResponseObjectAbstract
     public function __construct($identifier=null)
     {
      
-        parent::__construct();
-        
-        if ($identifier) {
-            $this->setContainer($identifier);
-        }
-
         $this->registerOption('html');
-
-    }
-
-
-    protected function setObjectIdentifier()
-    {
-        return "container";    
-    }
-
-    public function setContainer()
-    {
-        
-    }
-
-    public function getContainer()
-    {
-        
-        
+        $this->registerOption('target');
+      
+        if ($identifier) {
+            $this->setOption('target', $identifier);
+        }
     }
 
     public function append($html)

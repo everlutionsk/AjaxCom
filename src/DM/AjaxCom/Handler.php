@@ -10,11 +10,6 @@ use DM\AjaxCom\Helper\Response;
 class Handler
 {
 
-    const TYPE_CONTAINER = 'containers';
-    const TYPE_MODAL = 'modals';
-    const TYPE_CALLBACK = 'callback';
-    const TYPE_CHANGEURL = 'changeurl';
-
     /**
      * Collection of ResponderInterface objects
      *
@@ -120,7 +115,7 @@ class Handler
     }
 
     /**
-     * Generates respond
+     * Generates response
      * @return 
      */
 
