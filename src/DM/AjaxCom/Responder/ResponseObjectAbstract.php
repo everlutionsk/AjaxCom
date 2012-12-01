@@ -2,9 +2,9 @@
 
 namespace DM\AjaxCom\Responder;
 
-use DM\AjaxCom\Responder\ResponseObjectInterface;
+use DM\AjaxCom\Responder\ResponderInterface;
 
-abstract class ResponseObjectAbstract implements ResponseObjectInterface
+abstract class ResponseObjectAbstract implements ResponderInterface
 {
 
     const OBJECT_IDENTIFIER = null;
@@ -18,6 +18,7 @@ abstract class ResponseObjectAbstract implements ResponseObjectInterface
      * @var string operation - identifier of the object
      */
     private $operation = null;
+
     private $options = array();
 
 
@@ -28,13 +29,12 @@ abstract class ResponseObjectAbstract implements ResponseObjectInterface
      * @var string $value
      * @return ResponseObject
      */
-
     public function setOption($option, $value)
     {
         if ($this->isValidOption($option)) {
             $this->options[$option] = $value;
         }
-        return $this;    
+        return $this;
     }
 
     /**
@@ -43,7 +43,6 @@ abstract class ResponseObjectAbstract implements ResponseObjectInterface
      * @var array $option
      * @return ResponseObject
      */
-
     public function setOptions(array $options)
     {
         foreach ($options as $key => $value) {
@@ -51,7 +50,7 @@ abstract class ResponseObjectAbstract implements ResponseObjectInterface
                 $this->options[$key] = $value;
             }
         }
-        return $this;      
+        return $this;
     }
 
     /**
@@ -59,10 +58,9 @@ abstract class ResponseObjectAbstract implements ResponseObjectInterface
      *
      * @return array
      */
-
-    public function getOptions() 
+    public function getOptions()
     {
-        return $this->options;    
+        return $this->options;
     }
 
     /**
@@ -71,13 +69,12 @@ abstract class ResponseObjectAbstract implements ResponseObjectInterface
      * @var string $option
      * @return string value
      */
-
     public function getOption($option)
     {
         if (!isset($this->options[$option])) {
-            throw new \Exception ('This option does not exist');
+            throw new \Exception('This option does not exist');
         }
-        return $this->options[$option];    
+        return $this->options[$option];
     }
 
     /**
@@ -86,14 +83,13 @@ abstract class ResponseObjectAbstract implements ResponseObjectInterface
      * @var array $option
      * @return boolean
      */
-    
-    private function isValidOption($option) 
+    private function isValidOption($option)
     {
         if (!in_array($option, $this->validOptions)) {
-            throw new \Exception ('Not a valid option type for this component');
+            throw new \Exception('Not a valid option type for this component');
         }
-        
-        return TRUE;
+
+        return true;
     }
 
     /**
@@ -102,9 +98,8 @@ abstract class ResponseObjectAbstract implements ResponseObjectInterface
      * @var array $option
      * @return ResponseObject
      */
-    
-    protected function registerOption($option) 
-    {   
+    protected function registerOption($option)
+    {
         if (!in_array($option, $this->validOptions)) {
             array_push($this->validOptions, $option);
         }
@@ -118,19 +113,16 @@ abstract class ResponseObjectAbstract implements ResponseObjectInterface
      *
      * @return opperation item
      */
-
     public function render()
     {
-    
         if (!$this::OBJECT_IDENTIFIER) {
-           throw new \Exception ('No operation was set');
+            throw new \Exception('No operation was set');
         }
 
         $operation = array( 'operation' => $this::OBJECT_IDENTIFIER,
                             'options' => $this->options
-                            );
-        
-        return $operation;
+                        );
 
+        return $operation;
     }
 }

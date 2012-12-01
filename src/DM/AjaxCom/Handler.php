@@ -197,6 +197,4 @@ class Handler
         
         return Response::json(array('ajaxcom'=>$response));
     }
-
 }
-

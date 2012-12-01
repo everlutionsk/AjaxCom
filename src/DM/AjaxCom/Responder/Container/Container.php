@@ -18,10 +18,8 @@ class Container extends ResponseObjectAbstract
      *
      * @param string $identifier
      */
-    
-    public function __construct($identifier=null)
+    public function __construct($identifier = null)
     {
-     
         $this->registerOption(self::OPTION_VALUE);
         $this->registerOption(self::OPTION_TARGET);
         $this->registerOption(self::OPTION_METHOD);
@@ -30,8 +28,7 @@ class Container extends ResponseObjectAbstract
             $this->setOption(self::OPTION_TARGET, $identifier);
         }
     }
-    
-    
+
     /**
      * Append html to container
      *
@@ -79,7 +76,7 @@ class Container extends ResponseObjectAbstract
      * @return \Container
      */
     public function html($html)
-    {   
+    {
         $this->setOption(self::OPTION_VALUE, $html);
         $this->setOption(self::OPTION_METHOD, 'html');
         return $this;
@@ -97,7 +94,7 @@ class Container extends ResponseObjectAbstract
         $this->setOption(self::OPTION_METHOD, 'val');
         return $this;
     }
-  
+
     /**
      * Remove container
      *
@@ -109,4 +106,3 @@ class Container extends ResponseObjectAbstract
         return $this;
     }
 }
-
