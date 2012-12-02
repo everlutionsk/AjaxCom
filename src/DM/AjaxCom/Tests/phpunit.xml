@@ -1,0 +1,11 @@
+<phpunit bootstrap="../../../../vendor/autoload.php">
+
+    <testsuite name="AjaxCom">
+        <directory>./app/</directory>
+    </testsuite>
+
+    <logging>
+        <log type="coverage-html" target = "./log/report" charset="UTF-8" yui="true" hightlight="true" lowUpperBound="50" highLowerBound="80" />
+        <log type="testdox" target="./log/tesdox.html"/>
+    </logging>
+</phpunit>

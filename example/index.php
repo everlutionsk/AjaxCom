@@ -4,6 +4,7 @@ require_once('../vendor/autoload.php');
 
 use DM\AjaxCom\Handler;
 
+
 $handler = new Handler();
 
 $handler->container('#xyds')->append('dfas')->animate(false);
@@ -12,4 +13,4 @@ $handler->container('#xyds')->append('dfas')->animate(false);
 #$handler->callback('testfunction');
 #$handler->modal();
 
-echo $handler->respond();
+echo json_encode($handler->respond());
