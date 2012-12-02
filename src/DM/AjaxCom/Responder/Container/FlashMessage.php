@@ -10,8 +10,9 @@ class FlashMessage extends Container
 
     const OPTION_TYPE = 'type';
 
-    private static $flashMessageContainer = '[data-ajaxcom-flashmessage]';
+    private static $template = '<div class="%type%">%value%</div>';
 
+    private static $container = '[data-ajaxcom-flashmessage]';
 
     public function __construct($message, $type = self::TYPE_SUCCESS)
     {
@@ -19,8 +20,12 @@ class FlashMessage extends Container
         $this->registerOption(self::OPTION_TYPE);
 
         $this->setOption(self::OPTION_TYPE, $type);
-        $this->setOption(self::OPTION_TARGET, $this::$flashMessageContainer);
+        $this->setOption(self::OPTION_TARGET, $this::$container);
 
-        $this->append($message);
+        $value = $this::$template;
+        $value = str_replace('%type%', $type, $value);
+        $value = str_replace('%value%', $message, $value);
+
+        $this->append($value);
     }
 }
