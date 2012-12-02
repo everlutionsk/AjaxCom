@@ -164,25 +164,67 @@
             case 'val':
                 val();
                 break;
+            case 'remove':
+                remove();
+                break;
             default:
                 throw "Container method " + options.method + " is not supported";
                 break;
         }
 
         function replaceWith() {
-            $(options.target).replaceWith(options.value);
+            var $element = $(options.value);
+            $element.hide();
+            if (options.animate===true) {
+                $(options.target).fadeOut(600, function() {
+                    $(options.target).replaceWith($element);
+                    $element.fadeIn(600);
+                });
+            } else {
+                $(options.target).replaceWith($element.show());
+            }
         }
         function append() {
-            $(options.target).append(options.value);
+            var $element = $(options.value);
+            $element.hide();
+            if (options.animate===true) {
+                $(options.target).append($element);
+                $element.fadeIn(600);
+            } else {
+                $(options.target).append($element.show());
+            }
         }
         function prepend() {
-            $(options.target).prepend(options.value);
+            var $element = $(options.value);
+            $element.hide();
+            if (options.animate===true) {
+                $(options.target).prepend($element);
+                $element.fadeIn(600);
+            } else {
+                $(options.target).prepend($element.show());
+            }
         }
         function html() {
-            $(options.target).html(options.value);
+            if (options.animate===true) {
+                $(options.target).fadeOut(600, function() {
+                    $(options.target).html(options.value);
+                    $(options.target).fadeIn(600);
+                });
+            } else {
+                $(options.target).html(options.value);
+            }
         }
         function val() {
             $(options.target).val(options.value);
+        }
+        function remove() {
+            if (options.animate===true) {
+                $(options.target).fadeOut(600, function() {
+                    $(options.target).remove();
+                });
+            } else {
+                $(options.target).remove();
+            }
         }
     }
 
