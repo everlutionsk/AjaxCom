@@ -2,7 +2,7 @@
 
 namespace DM\AjaxCom\Responder;
 
-class Modal extends ResponseObjectAbstract
+class Modal extends AbstractResponder
 {
     const OBJECT_IDENTIFIER = 'modal';
 

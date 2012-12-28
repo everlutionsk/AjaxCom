@@ -2,7 +2,7 @@
 
 namespace DM\AjaxCom\Responder;
 
-class ChangeUrl extends ResponseObjectAbstract
+class ChangeUrl extends AbstractResponder
 {
     const OBJECT_IDENTIFIER = 'changeurl';
 

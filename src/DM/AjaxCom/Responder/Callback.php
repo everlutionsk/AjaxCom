@@ -2,7 +2,7 @@
 
 namespace DM\AjaxCom\Responder;
 
-class Callback extends ResponseObjectAbstract
+class Callback extends AbstractResponder
 {
     const OBJECT_IDENTIFIER = 'changeurl';
 
