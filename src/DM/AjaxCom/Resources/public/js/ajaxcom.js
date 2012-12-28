@@ -152,7 +152,11 @@
 
     // Handle callbacks
     function handleCallback(options) {
-        console.warn('handleCallback is not yet implement');
+        if ($.isFunction(window[options.function])) {
+            window[options.function]();
+        } else {
+            console.warn('Callback ' + options.function + ' is not a function');
+        }
     }
 
     // Handle containers

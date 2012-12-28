@@ -4,7 +4,7 @@ namespace DM\AjaxCom\Responder;
 
 class Callback extends AbstractResponder
 {
-    const OBJECT_IDENTIFIER = 'changeurl';
+    const OBJECT_IDENTIFIER = 'callback';
 
     const OPTION_FUNCTION = 'function';
 
