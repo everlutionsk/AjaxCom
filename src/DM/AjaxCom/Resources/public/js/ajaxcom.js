@@ -139,6 +139,15 @@
     // Handle change urls
     function handleChangeUrl(options) {
         console.warn('handleChangeUrl is not yet implement');
+        if (options.redirect===true) {
+            setTimeout(function() {
+                window.location.href = options.url;
+            }, options.wait);
+        } else {
+            setTimeout(function() {
+                window.history.replaceState(null, null, options.url);
+            }, options.wait);
+        }
     }
 
     // Handle callbacks
