@@ -6,16 +6,16 @@ class Modal extends AbstractResponder
 {
     const OBJECT_IDENTIFIER = 'modal';
 
-    const OPTION_WIDTH = 'width';
+    const OPTION_CONTENT = 'content';
 
     /**
      * Constructor
      *
-     * @param string $function
+     * @param string $content
      */
-    public function __construct($function)
+    public function __construct($content)
     {
-        $this->registerOption(self::OPTION_FUNCTION);
-        $this->setOption(self::OPTION_FUNCTION, $function);
+        $this->registerOption(self::OPTION_CONTENT);
+        $this->setOption(self::OPTION_CONTENT, $content);
     }
 }

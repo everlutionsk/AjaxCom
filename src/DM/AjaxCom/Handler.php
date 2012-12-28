@@ -82,11 +82,12 @@ class Handler
      *
      * Convenience method to allow for a fluent interface
      *
+     * @var string $content
      * @return Modal
      */
-    public function modal()
+    public function modal($content)
     {
-        $modal = new Modal();
+        $modal = new Modal($content);
         $this->register($modal);
         return $modal;
     }

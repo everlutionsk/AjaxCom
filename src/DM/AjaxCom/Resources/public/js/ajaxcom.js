@@ -133,7 +133,7 @@
 
     // Handle modals
     function handleModal(options) {
-        console.warn('handleModal is not yet implement');
+        createModal(options.content);
     }
 
     // Handle change urls
@@ -239,6 +239,10 @@
                 $(options.target).remove();
             }
         }
+    }
+
+    function createModal(content) {
+        $(content).modal();
     }
 
     $.fn.ajaxcom = fnAjaxcom;
