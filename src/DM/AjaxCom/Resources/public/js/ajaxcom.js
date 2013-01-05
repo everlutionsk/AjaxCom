@@ -133,7 +133,18 @@
 
     // Handle modals
     function handleModal(options) {
-        createModal(options.content);
+        switch (options.type) {
+            case 'twitterbootstrap':
+                twitterbootstrap();
+                break;
+            default:
+                throw "Modal type" + options.type + " is not supported";
+                break;
+        }
+
+        function twitterbootstrap() {
+            $(options.content).modal();
+        }
     }
 
     // Handle change urls
@@ -239,10 +250,6 @@
                 $(options.target).remove();
             }
         }
-    }
-
-    function createModal(content) {
-        $(content).modal();
     }
 
     $.fn.ajaxcom = fnAjaxcom;

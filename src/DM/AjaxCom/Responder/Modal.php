@@ -8,6 +8,8 @@ class Modal extends AbstractResponder
 
     const OPTION_CONTENT = 'content';
 
+    const OPTION_TYPE = 'type';
+
     /**
      * Constructor
      *
@@ -16,6 +18,11 @@ class Modal extends AbstractResponder
     public function __construct($content)
     {
         $this->registerOption(self::OPTION_CONTENT);
+        $this->registerOption(self::OPTION_TYPE);
         $this->setOption(self::OPTION_CONTENT, $content);
+        /**
+         * @todo Make this class abstract and implement different modal types
+         */
+        $this->setOption(self::OPTION_TYPE, 'twitterbootstrap');
     }
 }
