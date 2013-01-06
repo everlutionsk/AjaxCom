@@ -2,26 +2,27 @@
 
 namespace DM\AjaxCom\Responder;
 
-class Modal extends ResponseObjectAbstract
+class Modal extends AbstractResponder
 {
     const OBJECT_IDENTIFIER = 'modal';
-
-    private $title;
     
+    const OPTION_TYPE = 'type';
+    
+    
+    private $title;
     private $width;
     private $height;
     
 
-
     /**
      * Constructor
      *
-     * @param string $function
+     * @param string $content
      */
     public function __construct()
     {
-#       $this->registerOption(self::OPTION_FUNCTION);
-#       $this->setOption(self::OPTION_FUNCTION, $function);
+        $this->registerOption(self::OPTION_TYPE);
+        $this->setOption(self::OPTION_TYPE, 'twitterbootstrap');
         return $this;
     }
 

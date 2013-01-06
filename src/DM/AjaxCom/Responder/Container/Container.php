@@ -2,9 +2,9 @@
 
 namespace DM\AjaxCom\Responder\Container;
 
-use DM\AjaxCom\Responder\ResponseObjectAbstract;
+use DM\AjaxCom\Responder\AbstractResponder;
 
-class Container extends ResponseObjectAbstract
+class Container extends AbstractResponder
 {
 
     const OBJECT_IDENTIFIER = 'container';

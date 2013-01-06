@@ -4,7 +4,7 @@ namespace DM\AjaxCom\Responder;
 
 use DM\AjaxCom\Responder\ResponderInterface;
 
-abstract class ResponseObjectAbstract implements ResponderInterface
+abstract class AbstractResponder implements ResponderInterface
 {
 
     const OBJECT_IDENTIFIER = null;

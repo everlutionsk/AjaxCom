@@ -82,6 +82,7 @@ class Handler
      *
      * Convenience method to allow for a fluent interface
      *
+     * @var string $content
      * @return Modal
      */
     public function modal()

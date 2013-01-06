@@ -133,17 +133,41 @@
 
     // Handle modals
     function handleModal(options) {
-        console.warn('handleModal is not yet implement');
+        switch (options.type) {
+            case 'twitterbootstrap':
+                twitterbootstrap();
+                break;
+            default:
+                throw "Modal type" + options.type + " is not supported";
+                break;
+        }
+
+        function twitterbootstrap() {
+            $(options.content).modal();
+        }
     }
 
     // Handle change urls
     function handleChangeUrl(options) {
         console.warn('handleChangeUrl is not yet implement');
+        if (options.redirect===true) {
+            setTimeout(function() {
+                window.location.href = options.url;
+            }, options.wait);
+        } else {
+            setTimeout(function() {
+                window.history.replaceState(null, null, options.url);
+            }, options.wait);
+        }
     }
 
     // Handle callbacks
     function handleCallback(options) {
-        console.warn('handleCallback is not yet implement');
+        if ($.isFunction(window[options.function])) {
+            window[options.function]();
+        } else {
+            console.warn('Callback ' + options.function + ' is not a function');
+        }
     }
 
     // Handle containers
