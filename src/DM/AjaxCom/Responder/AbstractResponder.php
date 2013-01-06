@@ -118,7 +118,7 @@ abstract class AbstractResponder implements ResponderInterface
         if (!$this::OBJECT_IDENTIFIER) {
             throw new \Exception('No operation was set');
         }
-
+        
         $operation = array( 'operation' => $this::OBJECT_IDENTIFIER,
                             'options' => $this->options
                         );
