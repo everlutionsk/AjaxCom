@@ -13,6 +13,8 @@ class Container extends AbstractResponder
     const OPTION_TARGET = 'target';
     const OPTION_METHOD = 'method';
     const OPTION_ANIMATE = 'animate';
+    const OPTION_REMOVE_CLASS = 'removeClass';
+    const OPTION_ADD_CLASS = 'addClass';
 
     /**
      * Constructor
@@ -25,6 +27,8 @@ class Container extends AbstractResponder
         $this->registerOption(self::OPTION_TARGET);
         $this->registerOption(self::OPTION_METHOD);
         $this->registerOption(self::OPTION_ANIMATE);
+        $this->registerOption(self::OPTION_REMOVE_CLASS);
+        $this->registerOption(self::OPTION_ADD_CLASS);
 
         if ($identifier) {
             $this->setOption(self::OPTION_TARGET, $identifier);
@@ -120,6 +124,18 @@ class Container extends AbstractResponder
     public function animate($enable = true)
     {
         $this->setOption(self::OPTION_ANIMATE, (bool) $enable);
+        return $this;
+    }
+
+    public function removeClass($class)
+    {
+        $this->setOption(self::OPTION_REMOVE_CLASS, $class);
+        return $this;
+    }
+
+    public function addClass($class)
+    {
+        $this->setOption(self::OPTION_ADD_CLASS, $class);
         return $this;
     }
 }
