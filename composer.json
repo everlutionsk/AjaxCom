@@ -1,6 +1,9 @@
 {
     "name": "dm/ajaxcom",
+    "description": "Controls Ajax from PHP",
     "type": "library",
+    "keywords": ["ajax"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Miroslav Demovic",
