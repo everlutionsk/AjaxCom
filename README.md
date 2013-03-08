@@ -23,13 +23,7 @@ Via composer:
 {
     "require": {
         "dm/ajaxcom": "dev-master"
-    },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "git@github.com:advertize/AjaxCom.git"
-        }
-    ]
+    }
 }
 ```
 
