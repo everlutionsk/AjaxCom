@@ -8,9 +8,8 @@ $handler = new Handler();
 
 #$handler->container('#xyds')->append('dfas')->animate(false);
 
-#$handler->changeUrl('http://testurl.com', 10);
+$handler->changeUrl('http://testurl.com', 10);
 #$handler->callback('testfunction');
-$handler->modal()->setTitle('test')->setWidth('200');
 
 
 
