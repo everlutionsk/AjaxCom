@@ -6,7 +6,7 @@ use DM\AjaxCom\Responder\Container\FlashMessage;
 use DM\AjaxCom\Responder\Container\Container;
 use DM\AjaxCom\Responder\ChangeUrl;
 use DM\AjaxCom\Responder\Callback;
-use DM\AjaxCom\Responder\Modal\Modal;
+use DM\AjaxCom\Responder\Modal;
 use DM\AjaxCom\Responder\ResponderInterface;
 
 class Handler
@@ -82,14 +82,15 @@ class Handler
      *
      * Convenience method to allow for a fluent interface
      *
-     * @var string $customHandler
+     * @var string html
+     * @var string type
      * @return Modal
      */
-    public function modal($customHandler=false)
+    public function modal($html, $type = Modal::DEFAULT_TYPE)
     {
-        $modal = new Modal();
+        $modal = new Modal($html, $type);
         $this->register($modal);
-        return $modal->getHandler($customHandler);
+        return $modal;
     }
 
     /**

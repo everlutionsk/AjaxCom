@@ -143,7 +143,7 @@
         }
 
         function twitterbootstrap() {
-            $(options.content).modal();
+            $(options.html).modal();
         }
     }
 
