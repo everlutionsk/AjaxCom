@@ -13,6 +13,13 @@ abstract class AbstractModalType
     protected $height;
     protected $buttons;
  
+    
+    public function __construct()
+    {
+        #set defaults
+        $this->setId(uniqid('modal_'));
+    }
+
    
     /**
      * Magic setters/getters for the defined properties
