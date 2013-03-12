@@ -196,6 +196,18 @@
                 break;
         }
 
+        function removeClass() {
+            if (options.removeClass) {
+                $(options.target).removeClass(options.removeClass);
+            }
+        }
+
+        function addClass() {
+            if (options.addClass) {
+                $(options.target).addClass(options.addClass);
+            }
+        }
+
         function replaceWith() {
             var $element = $(options.value);
             $element.hide();
@@ -232,14 +244,20 @@
             if (options.animate===true) {
                 $(options.target).fadeOut(600, function() {
                     $(options.target).html(options.value);
+                    removeClass();
+                    addClass();
                     $(options.target).fadeIn(600);
                 });
             } else {
                 $(options.target).html(options.value);
+                removeClass();
+                addClass();
             }
         }
         function val() {
             $(options.target).val(options.value);
+            removeClass();
+            addClass();
         }
         function remove() {
             if (options.animate===true) {

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AjaxCom</title>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="/src/DM/AjaxCom/Resources/public/js/ajaxcom.js"></script>
+
+        
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+    </head>
+    <body data-target=".bs-docs-sidebar">
+        
+    <div class="container">    
+    <p>
+        <a href="/example/backend.php?q=append" class="btn btn-success" data-ajaxcom>Append row</a>
+        <a href="/example/backend.php?q=delete-by-class" class="btn btn-danger" data-ajaxcom>Delete by class</a>
+    </p>
+    <table id="example-table" class="table table-bordered">
+    <thead>
+        <tr>
+            <th></th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr id="row1">
+            <td>1</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td>
+                <a href="/example/backend.php?q=edit&id=row1" class="btn" data-ajaxcom>Edit</a>
+                <a href="/example/backend.php?q=delete-by-id&id=row1" class="btn btn-danger" data-ajaxcom>Delete</a>
+            </td>
+        </tr>
+        <tr id="row2" class="delete-me">
+            <td>2</td>
+            <td>Mark</td>
+            <td>Boot</td>
+            <td>@TwBootstrap</td>
+            <td>
+                <a href="/example/backend.php?q=edit&id=row2" class="btn" data-ajaxcom>Edit</a>
+                <a href="/example/backend.php?q=delete-by-id&id=row2" class="btn btn-danger" data-ajaxcom>Delete</a>
+            </td>
+        </tr>
+        <tr id="row3" class="delete-me">
+            <td>3</td>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+            <td>
+                <a href="/example/backend.php?q=edit&id=row3" class="btn" data-ajaxcom>Edit</a>
+                <a href="/example/backend.php?q=delete-by-id&id=row3" class="btn btn-danger" data-ajaxcom>Delete</a>
+            </td>
+        </tr>
+    </tbody>
+    </table>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <a href="/example/index.php" data-ajaxcom>Link</a>
+        <div id="1234">
+            test
+        </div>
+        <div data-ajaxcom-flashmessage>
+        </div>
+        <form method="POST" action="/example/index.php" data-ajaxcom>
+            <input type="text" value="fggfg" name="dfdfdf" />
+            <input type="submit" value="Submit" />
+        </form>
+
+    </div>
+
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+
+        <script>
+            $(document).ajaxcom('[data-ajaxcom]');
+        </script>
+    </body>
+</html>
