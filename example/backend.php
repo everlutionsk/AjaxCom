@@ -3,32 +3,38 @@
 require_once('../vendor/autoload.php');
 use DM\AjaxCom\Handler;
 
+$query = '';
 
-$query = strtolower($_GET['q']);
-$id = $_GET['id'];
+if (!empty($_GET['q'])) {
+   $query = strtolower($_GET['q']); 
+}
 
+if (!empty($_GET['id'])) {
+    $id = $_GET['id'];
+}
 
 $handler = new Handler();
 
-
-$newRow = "
-            <tr id='row4'>
-                <td>4</td>
-                <td>xxx</td>
-                <td>xxx2</td>
-                <td>xxx3</td>
+/**
+ * Normally, you would get the new row from partial
+ */
+$newRowId = rand(4,100);
+$newRow = " <tr id='row{$newRowId}'>
+                <td>{$newRowId}</td>
+                <td>". (!empty($_POST['firstname'])?$_POST['firstname']:'Test') ."</td>
+                <td>". (!empty($_POST['lastname'])?$_POST['lastname']:'Row') ."</td>
+                <td>".  (!empty($_POST['username'])?$_POST['username']:'Love it yet?') ."</td>
                 <td>
-                dfads
+                   <a href='/example/backend.php?q=edit&id=row{$newRowId}' class='btn' data-ajaxcom>Edit</a>
+                   <a href='/example/backend.php?q=delete-by-id&id=row{$newRowId}' class='btn btn-danger' data-ajaxcom>Delete</a>
                 </td>
             </tr>
             ";
 
 
 switch ($query) {
-
     case "edit":
-        $handler->modal()
-                    ->setTitle('test');
+        $handler->modal();
     break;
     case "append":
         $handler->container('#example-table tbody')->append($newRow);
@@ -36,18 +42,16 @@ switch ($query) {
     case "delete-by-id":
         $handler->container('#'.$id)->remove();       
     break;    
+    case "change-url":
+        $handler->changeUrl('/example/new-url');
+    break;
     case "delete-by-class":
         $handler->container('.delete-me')->remove();
     break;
+    case "callback":
+        $handler->callback('yup');
+    break;
 }
-
-
-
-#$handler->container('#1234')->append('fffffffffff');
-
-#$handler->changeUrl('http://testurl.com', 10);
-#$handler->callback('testfunction');
-#$handler->modal()->setTitle('test')->setWidth('200');
 
 
 echo json_encode($handler->respond());

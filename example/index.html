@@ -11,11 +11,18 @@
         <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
     </head>
     <body data-target=".bs-docs-sidebar">
+ 
+ 
+    <div data-ajaxcom-flashmessage>
+    </div>
         
     <div class="container">    
     <p>
         <a href="/example/backend.php?q=append" class="btn btn-success" data-ajaxcom>Append row</a>
         <a href="/example/backend.php?q=delete-by-class" class="btn btn-danger" data-ajaxcom>Delete by class</a>
+        
+        <a href="/example/backend.php?q=callback" class="btn btn pull-right" data-ajaxcom>Callback</a>
+        <a href="/example/backend.php?q=change-url" class="btn btn-info pull-right" data-ajaxcom>Push new Url</a>
     </p>
     <table id="example-table" class="table table-bordered">
     <thead>
@@ -62,32 +69,32 @@
     </table>
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <a href="/example/index.php" data-ajaxcom>Link</a>
-        <div id="1234">
-            test
-        </div>
-        <div data-ajaxcom-flashmessage>
-        </div>
-        <form method="POST" action="/example/index.php" data-ajaxcom>
-            <input type="text" value="fggfg" name="dfdfdf" />
-            <input type="submit" value="Submit" />
+    <div>    
+        <form method="POST" action="/example/backend.php?q=append" data-ajaxcom>
+        <fieldset>
+            <legend>Example of form adding rows</legend>
+            <label>First name</label>
+            <input type="text" value="" name="firstname" />
+            <label>Last name</label>
+            <input type="text" value="" name="lastname" />
+            <label>User name</label>
+            <input type="text" value="" name="username" />
+        </fieldset>
+        <button type="submit" class='btn'>Submit </button>
+            
         </form>
 
     </div>
+    </div>
 
-        <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script>
+       $(document).ajaxcom('[data-ajaxcom]');
 
-        <script>
-            $(document).ajaxcom('[data-ajaxcom]');
-        </script>
+       function yup() 
+       {
+            alert('Your callback code');    
+       }
+    </script>
     </body>
 </html>

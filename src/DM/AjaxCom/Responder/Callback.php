@@ -6,7 +6,7 @@ class Callback extends AbstractResponder
 {
     const OBJECT_IDENTIFIER = 'callback';
 
-    const OPTION_FUNCTION = 'function';
+    const OPTION_FUNCTION = 'callFunction';
 
     /**
      * Constructor

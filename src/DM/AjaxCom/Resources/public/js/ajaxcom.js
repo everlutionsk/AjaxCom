@@ -163,10 +163,10 @@
 
     // Handle callbacks
     function handleCallback(options) {
-        if ($.isFunction(window[options.function])) {
-            window[options.function]();
+        if ($.isFunction(window[options.callFunction])) {
+            window[options.callFunction]();
         } else {
-            console.warn('Callback ' + options.function + ' is not a function');
+            console.warn('Callback ' + options.callFunction + ' is not a function');
         }
     }
 
