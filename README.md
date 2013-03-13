@@ -1,6 +1,9 @@
 #AjaxCom
 AjaxCom is a PHP library that allows developers to write their ajax code in PHP with minimal javascript.
 
+###Demo
+http://ajaxcom.advertize.sk/
+
 ##Features
 - Append html to elements
 - Prepend html to elements
