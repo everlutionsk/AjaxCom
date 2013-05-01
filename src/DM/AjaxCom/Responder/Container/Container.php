@@ -121,7 +121,7 @@ class Container extends AbstractResponder
      * @var bool $enable
      * @return \Container
      */
-    public function animate($enable = true)
+    public function animate($enable = false)
     {
         $this->setOption(self::OPTION_ANIMATE, (bool) $enable);
         return $this;
