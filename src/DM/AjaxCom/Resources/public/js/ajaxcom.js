@@ -2,6 +2,15 @@
 // https://github.com/advertize/AjaxCom
 (function($) {
     "use strict";
+
+    $.event.props.push('state');
+    $(window).on('popstate.ajaxcom', function(event) {
+        if (typeof event.state === 'object' && event.state !== null) {
+            window.location.reload();
+        }
+    });
+    window.history.replaceState({}, null);
+
     // Intercept click and submit events and perform an ajax request then
     // handle instructions returned
     //
@@ -157,12 +166,12 @@
         switch (options.method) {
             case 'push':
                 setTimeout(function() {
-                    window.history.pushState(null, null, options.url);
+                    window.history.pushState({}, null, options.url);
                 }, options.wait);
                 break;
             case 'replace':
                 setTimeout(function() {
-                    window.history.replaceState(null, null, options.url);
+                    window.history.replaceState({}, null, options.url);
                 }, options.wait);
                 break;
             case 'redirect':
