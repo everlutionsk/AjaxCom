@@ -138,12 +138,16 @@
                 twitterbootstrap();
                 break;
             default:
-                throw "Modal type" + options.type + " is not supported";
+                throw "Modal type " + options.type + " is not supported";
                 break;
         }
 
         function twitterbootstrap() {
-            $(options.html).modal();
+            if (options.close === true) {
+                $(options.html).modal('hide');
+            } else {
+                $(options.html).modal();
+            }
         }
     }
 

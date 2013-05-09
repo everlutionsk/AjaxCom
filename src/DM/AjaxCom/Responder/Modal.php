@@ -11,6 +11,7 @@ class Modal extends AbstractResponder
  
     const OPTION_TYPE = 'type';
     const OPTION_HTML = 'html';
+    const OPTION_CLOSE = 'close';
         
     const DEFAULT_TYPE = 'twitterbootstrap';
 
@@ -22,8 +23,20 @@ class Modal extends AbstractResponder
     {
         $this->registerOption(self::OPTION_HTML);
         $this->registerOption(self::OPTION_TYPE);
+        $this->registerOption(self::OPTION_CLOSE);
     
         $this->setOption(self::OPTION_HTML, $html);
         $this->setOption(self::OPTION_TYPE, $type);
+    }
+
+    /**
+     * Close modal
+     *
+     * @return Modal
+     */
+    public function close()
+    {
+        $this->setOption(self::OPTION_CLOSE, true);
+        return $this;
     }
 }
