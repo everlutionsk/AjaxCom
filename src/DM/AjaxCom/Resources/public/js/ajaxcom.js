@@ -18,6 +18,9 @@
     //
     // Returns the jQuery object
     function fnAjaxcom(selector, options) {
+        if (!selector) {
+            selector = 'a, form';
+        }
         this.on('click', selector, function(event) {
             var opts = $.extend({}, options);
             handleClick(event, opts);
