@@ -7,24 +7,28 @@ class ChangeUrl extends AbstractResponder
     const OBJECT_IDENTIFIER = 'changeurl';
 
     const OPTION_URL = 'url';
+    const OPTION_METHOD = 'method';
     const OPTION_WAIT = 'wait';
-    const OPTION_REDIRECT = 'redirect';
+
+    const PUSH = 'push';
+    const REPLACE = 'replace';
+    const REDIRECT = 'redirect';
 
     /**
      * Constructor
      *
      * @param string $url The new URL
+     * @param string $method push|replace|redirect
      * @param integer $wait How long to wait until changing URL
-     * @param boolean $redirect Whether to force a redirect
      */
-    public function __construct($url, $wait = 0, $redirect = false)
+    public function __construct($url, $method, $wait = 0)
     {
         $this->registerOption(self::OPTION_URL);
+        $this->registerOption(self::OPTION_METHOD);
         $this->registerOption(self::OPTION_WAIT);
-        $this->registerOption(self::OPTION_REDIRECT);
 
         $this->setOption(self::OPTION_URL, $url);
+        $this->setOption(self::OPTION_METHOD, $method);
         $this->setOption(self::OPTION_WAIT, $wait);
-        $this->setOption(self::OPTION_REDIRECT, $redirect);
     }
 }

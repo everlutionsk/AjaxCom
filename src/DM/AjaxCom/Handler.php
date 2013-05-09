@@ -114,13 +114,13 @@ class Handler
      * Convenience method to allow for a fluent interface
      *
      * @var string $url
+     * @var string $method push|replace|redirect
      * @var int $wait - wait before action
-     * @var bool $redirect - if request should be redirected or pushed only (false==push only)
      * @return ChangeUrl
      */
-    public function changeUrl($url, $wait = 0, $redirect=false)
+    public function changeUrl($url, $method = ChangeUrl::PUSH, $wait = 0)
     {
-        $changeUrl = new ChangeUrl($url, $wait, $redirect);
+        $changeUrl = new ChangeUrl($url, $method, $wait);
         $this->register($changeUrl);
         return $changeUrl;
     }

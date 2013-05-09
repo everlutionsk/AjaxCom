@@ -153,15 +153,26 @@
 
     // Handle change urls
     function handleChangeUrl(options) {
-        console.warn('handleChangeUrl is not yet implement');
-        if (options.redirect===true) {
-            setTimeout(function() {
-                window.location.href = options.url;
-            }, options.wait);
-        } else {
-            setTimeout(function() {
-                window.history.replaceState(null, null, options.url);
-            }, options.wait);
+        console.warn('handleChangeUrl is not yet fully implement');
+        switch (options.method) {
+            case 'push':
+                setTimeout(function() {
+                    window.history.pushState(null, null, options.url);
+                }, options.wait);
+                break;
+            case 'replace':
+                setTimeout(function() {
+                    window.history.replaceState(null, null, options.url);
+                }, options.wait);
+                break;
+            case 'redirect':
+                setTimeout(function() {
+                    window.location.href = options.url;
+                }, options.wait);
+                break;
+            default:
+                throw "ChangeUrl method " + options.method + " is not supported";
+                break;
         }
     }
 
