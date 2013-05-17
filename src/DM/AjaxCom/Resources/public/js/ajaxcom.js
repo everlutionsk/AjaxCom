@@ -158,7 +158,13 @@
             if (options.close === true) {
                 $(options.html).modal('hide');
             } else {
-                $(options.html).modal();
+                var $html = $(options.html);
+                $html.modal();
+                if (options.autoremove) {
+                    $html.on('hidden', function(event) {
+                        $(this).remove();
+                    });
+                }
             }
         }
     }
