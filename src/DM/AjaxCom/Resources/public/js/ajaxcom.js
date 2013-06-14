@@ -254,23 +254,25 @@
             }
         }
         function append() {
-            var $element = $(options.value);
-            $element.hide();
+            
             if (options.animate===true) {
+                var $element = $(options.value);
+                $element.hide();
                 $(options.target).append($element);
                 $element.fadeIn(600);
             } else {
-                $(options.target).append($element.show());
+                $(options.target).append(options.value);
             }
         }
         function prepend() {
-            var $element = $(options.value);
-            $element.hide();
+           
             if (options.animate===true) {
+                var $element = $(options.value);
+                $element.hide();
                 $(options.target).prepend($element);
                 $element.fadeIn(600);
             } else {
-                $(options.target).prepend($element.show());
+                $(options.target).prepend(options.value);
             }
         }
         function html() {
