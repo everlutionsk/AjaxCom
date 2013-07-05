@@ -111,10 +111,18 @@
             return;
         }
 
+        var data = $(form).serializeArray();
+        $(form).find('input[type=file]').each(function(index, value) {
+            data.push({
+                name: value.attr('name'),
+                value: value.val()
+            });
+        });
+
         var defaults = {
             type: form.method,
             url: form.action,
-            data: $(form).serializeArray()
+            data: data
         }
 
         ajaxcom($.extend({}, defaults, options));
