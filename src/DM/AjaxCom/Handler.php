@@ -99,11 +99,12 @@ class Handler
      * Convenience method to allow for a fluent interface
      *
      * @var string $function
+     * @var mixed $params Parameters sent to the callback function
      * @return Callback
      */
-    public function callback($function)
+    public function callback($function, $params = null)
     {
-        $callback = new Callback($function);
+        $callback = new Callback($function, $params);
         $this->register($callback);
         return $callback;
     }
