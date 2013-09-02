@@ -28,6 +28,10 @@
         this.on('submit', selector, function(event) {
             var opts = $.extend({}, options);
             handleSubmit(event, opts);
+            //Soving issue about multiple submissions.
+            //It is needed to find another way to block the submission. But 
+            //maybe it is needed to change this Jquery plugin
+            $(selector).find('[type=submit]').attr('disabled', true);
         });
         return this;
     }
