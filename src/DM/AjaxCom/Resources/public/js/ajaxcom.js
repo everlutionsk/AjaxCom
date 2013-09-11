@@ -27,11 +27,8 @@
         });
         this.on('submit', selector, function(event) {
             var opts = $.extend({}, options);
+            opts.triggerElement = this;
             handleSubmit(event, opts);
-            //Soving issue about multiple submissions.
-            //It is needed to find another way to block the submission. But 
-            //maybe it is needed to change this Jquery plugin
-            $(selector).find('[type=submit]').attr('disabled', true);
         });
         return this;
     }
@@ -43,22 +40,56 @@
     // Returns the same as $.ajax
     function ajaxcom(options) {
         var defaults = {
-            dataType: 'json'
+            dataType: 'json',
+            beforeSend : function(xhr, settings){
+                if ($(options.triggerElement).attr('multi-submission') === 'false'){
+                    $(options.triggerElement).find('input[type=submit]').attr('disabled', 'disabled');
+                }
+                xhr.setRequestHeader('X-AjaxCom', 'true');
+            },
+            success : function(data, status, xhr){
+                if (data.ajaxcom) {
+                    $.each(data.ajaxcom, function(index, operation) {
+                        handleOperation(operation);
+                    });
+                }
+            },
+            complete : function(jqXHR, textStatus){
+                if ($(options.triggerElement).attr('multi-submission') === 'false'){
+                    $(options.triggerElement).find('input[type=submit]').removeAttr('disabled');
+                }
+            }
         };
+        
+        
         options = $.extend(true, {}, $.ajaxSettings, defaults, options);
 
-        options.beforeSend = function(xhr, settings) {
-            xhr.setRequestHeader('X-AjaxCom', 'true');
-        }
-
-        options.success = function(data, status, xhr) {
-            if (data.ajaxcom) {
-                $.each(data.ajaxcom, function(index, operation) {
-                    handleOperation(operation);
-                });
+        //If exists a definition, runs the external function and then the bit defined in defaults
+        var preBeforeSend = options.beforeSend;
+        options.beforeSend = (typeof preBeforeSend === 'function')?
+                function(xhr, settings) {
+                    preBeforeSend(xhr, settings);
+                    defaults.beforeSend(xhr, settings);
+                }
+                : defaults.beforeSend;
+        
+        //If exists a definition, runs the external function and then the bit defined in defaults
+        var preSuccess = options.success;
+        options.success = (typeof preSuccess === 'function')?
+            function(data, status, xhr) {
+                preSuccess(data, status, xhr);
+                defaults.success(data, status, xhr);
             }
-        }
-
+            : defaults.success;
+        //If exists a definition, runs the external function and then the bit defined in defaults
+        var preComplete = options.complete;
+        options.complete = (typeof preComplete === 'function')?
+            function(jqXHR, textStatus) {
+                preComplete(jqXHR, textStatus);
+                defaults.complete(jqXHR, textStatus);
+            }
+            : defaults.complete;
+        
         return $.ajax(options);
     }
 
@@ -118,8 +149,8 @@
         var data = $(form).serializeArray();
         $(form).find('input[type=file]').each(function(index, value) {
             data.push({
-                name: value.attr('name'),
-                value: value.val()
+                name: $(value).attr('name'),
+                value: $(value).val()
             });
         });
 
