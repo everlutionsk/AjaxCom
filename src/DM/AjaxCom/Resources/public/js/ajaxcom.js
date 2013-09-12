@@ -38,24 +38,60 @@
     //
     // Returns the same as $.ajax
     function ajaxcom(options) {
+        var customBeforeSend = options.beforeSend;
+        delete options.beforeSend;
+        var customSuccess = options.success;
+        delete options.success;
+        var customComplete = options.complete;
+        delete options.complete;
+        
         var defaults = {
-            dataType: 'json'
-        };
-        options = $.extend(true, {}, $.ajaxSettings, defaults, options);
-
-        options.beforeSend = function(xhr, settings) {
-            xhr.setRequestHeader('X-AjaxCom', 'true');
-        }
-
-        options.success = function(data, status, xhr) {
-            if (data.ajaxcom) {
-                $.each(data.ajaxcom, function(index, operation) {
-                    handleOperation(operation);
-                });
+            dataType: 'json',
+            beforeSend : function(xhr, settings){
+                doAutodisableButton(true, options);
+                //Running external definition
+                
+                if (typeof customBeforeSend === 'function') {
+                    customBeforeSend(xhr, settings);
+                }
+                
+                xhr.setRequestHeader('X-AjaxCom', 'true');
+            },
+            success : function(data, status, xhr){
+                //Running external definition
+                if (typeof customSuccess === 'function') {
+                    customSuccess(data, status, xhr);
+                }
+                
+                if (data.ajaxcom) {
+                    $.each(data.ajaxcom, function(index, operation) {
+                        handleOperation(operation);
+                    });
+                }
+            },
+            complete : function(jqXHR, textStatus){
+                doAutodisableButton(false, options);
+                if (typeof customComplete === 'function') {
+                    customComplete(jqXHR, textStatus);
+                }
             }
-        }
-
+        };
+        
+        
+        options = $.extend(true, {}, $.ajaxSettings, defaults, options);
         return $.ajax(options);
+    }
+    
+    /*
+     * 
+     * param boolean disabled
+     * param json options
+     */
+    function doAutodisableButton(disabled, options)
+    {
+        if (options.submitButton) {
+            $(options.submitButton).prop('disabled', disabled);
+        }
     }
 
     // Handle click events
@@ -105,7 +141,9 @@
     function handleSubmit(event, options)
     {
         var form = event.currentTarget;
-
+        //Find the button which launched the event
+        var submitButton = $(form).find("[data-ajaxcom-autodisable]");
+        
         // Ignore nonform elements
         if (form.tagName.toUpperCase()!=='FORM') {
             return;
@@ -114,16 +152,17 @@
         var data = $(form).serializeArray();
         $(form).find('input[type=file]').each(function(index, value) {
             data.push({
-                name: value.attr('name'),
-                value: value.val()
+                name: $(value).attr('name'),
+                value: $(value).val()
             });
         });
 
         var defaults = {
             type: form.method,
             url: form.action,
-            data: data
-        }
+            data: data,
+            submitButton: submitButton.length > 0? submitButton : null
+        };
 
         ajaxcom($.extend({}, defaults, options));
 
