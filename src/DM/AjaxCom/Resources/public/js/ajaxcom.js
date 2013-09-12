@@ -51,7 +51,7 @@
                 doAutodisableButton(true, options);
                 //Running external definition
                 
-                if(typeof customBeforeSend === 'function'){
+                if (typeof customBeforeSend === 'function') {
                     customBeforeSend(xhr, settings);
                 }
                 
@@ -59,7 +59,7 @@
             },
             success : function(data, status, xhr){
                 //Running external definition
-                if(typeof customSuccess === 'function'){
+                if (typeof customSuccess === 'function') {
                     customSuccess(data, status, xhr);
                 }
                 
@@ -71,7 +71,7 @@
             },
             complete : function(jqXHR, textStatus){
                 doAutodisableButton(false, options);
-                if(typeof customComplete === 'function'){
+                if (typeof customComplete === 'function') {
                     customComplete(jqXHR, textStatus);
                 }
             }
@@ -87,8 +87,9 @@
      * param boolean disabled
      * param json options
      */
-    function doAutodisableButton(disabled, options){
-        if (options.submitButton){
+    function doAutodisableButton(disabled, options)
+    {
+        if (options.submitButton) {
             $(options.submitButton).prop('disabled', disabled);
         }
     }
