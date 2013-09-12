@@ -27,7 +27,6 @@
         });
         this.on('submit', selector, function(event) {
             var opts = $.extend({}, options);
-            opts.triggerElement = this;
             handleSubmit(event, opts);
         });
         return this;
@@ -39,15 +38,31 @@
     //
     // Returns the same as $.ajax
     function ajaxcom(options) {
+        var customBeforeSend = options.beforeSend;
+        delete options.beforeSend;
+        var customSuccess = options.success;
+        delete options.success;
+        var customComplete = options.complete;
+        delete options.complete;
+        
         var defaults = {
             dataType: 'json',
             beforeSend : function(xhr, settings){
-                if ($(options.triggerElement).attr('multi-submission') === 'false'){
-                    $(options.triggerElement).find('input[type=submit]').attr('disabled', 'disabled');
+                doAutodisableButton(true, options);
+                //Running external definition
+                
+                if(typeof customBeforeSend === 'function'){
+                    customBeforeSend(xhr, settings);
                 }
+                
                 xhr.setRequestHeader('X-AjaxCom', 'true');
             },
             success : function(data, status, xhr){
+                //Running external definition
+                if(typeof customSuccess === 'function'){
+                    customSuccess(data, status, xhr);
+                }
+                
                 if (data.ajaxcom) {
                     $.each(data.ajaxcom, function(index, operation) {
                         handleOperation(operation);
@@ -55,42 +70,27 @@
                 }
             },
             complete : function(jqXHR, textStatus){
-                if ($(options.triggerElement).attr('multi-submission') === 'false'){
-                    $(options.triggerElement).find('input[type=submit]').removeAttr('disabled');
+                doAutodisableButton(false, options);
+                if(typeof customComplete === 'function'){
+                    customComplete(jqXHR, textStatus);
                 }
             }
         };
         
         
         options = $.extend(true, {}, $.ajaxSettings, defaults, options);
-
-        //If exists a definition, runs the external function and then the bit defined in defaults
-        var preBeforeSend = options.beforeSend;
-        options.beforeSend = (typeof preBeforeSend === 'function')?
-                function(xhr, settings) {
-                    preBeforeSend(xhr, settings);
-                    defaults.beforeSend(xhr, settings);
-                }
-                : defaults.beforeSend;
-        
-        //If exists a definition, runs the external function and then the bit defined in defaults
-        var preSuccess = options.success;
-        options.success = (typeof preSuccess === 'function')?
-            function(data, status, xhr) {
-                preSuccess(data, status, xhr);
-                defaults.success(data, status, xhr);
-            }
-            : defaults.success;
-        //If exists a definition, runs the external function and then the bit defined in defaults
-        var preComplete = options.complete;
-        options.complete = (typeof preComplete === 'function')?
-            function(jqXHR, textStatus) {
-                preComplete(jqXHR, textStatus);
-                defaults.complete(jqXHR, textStatus);
-            }
-            : defaults.complete;
-        
         return $.ajax(options);
+    }
+    
+    /*
+     * 
+     * param boolean disabled
+     * param json options
+     */
+    function doAutodisableButton(disabled, options){
+        if (options.submitButton){
+            $(options.submitButton).prop('disabled', disabled);
+        }
     }
 
     // Handle click events
@@ -140,7 +140,9 @@
     function handleSubmit(event, options)
     {
         var form = event.currentTarget;
-
+        //Find the button which launched the event
+        var submitButton = $(form).find("[data-ajaxcom-autodisable]");
+        
         // Ignore nonform elements
         if (form.tagName.toUpperCase()!=='FORM') {
             return;
@@ -157,8 +159,9 @@
         var defaults = {
             type: form.method,
             url: form.action,
-            data: data
-        }
+            data: data,
+            submitButton: submitButton.length > 0? submitButton : null
+        };
 
         ajaxcom($.extend({}, defaults, options));
 
