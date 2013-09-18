@@ -112,7 +112,11 @@
         }
 
         // Ignore external links
-        if (location.protocol!==link.protocol || location.host!==link.host) {
+        var locationHost = location.port === ""? 
+            location.hostname + ":80" : location.hostname + ":" +  location.port;
+        var linkHost = link.port === ""? 
+            link.hostname + ":80" : link.hostname + ":" + link.port;
+        if (location.protocol!==link.protocol || locationHost!==linkHost) {
             return;
         }
 
