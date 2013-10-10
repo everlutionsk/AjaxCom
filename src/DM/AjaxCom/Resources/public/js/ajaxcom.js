@@ -222,7 +222,6 @@
 
     // Handle change urls
     function handleChangeUrl(options) {
-        console.warn('handleChangeUrl is not yet fully implement');
         switch (options.method) {
             case 'push':
                 setTimeout(function() {
@@ -249,8 +248,6 @@
     function handleCallback(options) {
         if ($.isFunction(window[options.callFunction])) {
             window[options.callFunction](options.params);
-        } else {
-            console.warn('Callback ' + options.callFunction + ' is not a function');
         }
     }
 
