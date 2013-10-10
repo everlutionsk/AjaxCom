@@ -248,8 +248,6 @@
     function handleCallback(options) {
         if ($.isFunction(window[options.callFunction])) {
             window[options.callFunction](options.params);
-        } else {
-
         }
     }
 
