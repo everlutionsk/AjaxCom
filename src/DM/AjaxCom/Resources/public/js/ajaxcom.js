@@ -56,6 +56,7 @@
                 }
                 
                 xhr.setRequestHeader('X-AjaxCom', 'true');
+                xhr.setRequestHeader('Accept', 'application/json');
             },
             success : function(data, status, xhr){
                 //Running external definition
