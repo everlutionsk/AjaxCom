@@ -201,6 +201,9 @@
             case 'twitterbootstrap':
                 twitterbootstrap();
                 break;
+            case 'twitterbootstrap3':
+                twitterbootstrap3();
+                break;
             default:
                 throw "Modal type " + options.type + " is not supported";
                 break;
@@ -214,6 +217,24 @@
                 $html.modal();
                 if (options.autoremove) {
                     $html.on('hidden', function(event) {
+                        $(this).remove();
+                    });
+                }
+            }
+        }
+
+        /**
+         * modals background not closing with bootstrap3
+         */
+        function twitterbootstrap3() {
+            if (options.close === true) {
+                $('.modal').modal('hide');
+            } else {
+                var $html = $(options.html);
+                $('body').append($html);
+                $('.modal').modal();
+                if (options.autoremove) {
+                    $('.modal').on('hidden.bs.modal', function (e) {
                         $(this).remove();
                     });
                 }
