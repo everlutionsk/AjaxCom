@@ -44,17 +44,17 @@
         delete options.success;
         var customComplete = options.complete;
         delete options.complete;
-        
+
         var defaults = {
             dataType: 'json',
             beforeSend : function(xhr, settings){
                 doAutodisableButton(true, options);
                 //Running external definition
-                
+
                 if (typeof customBeforeSend === 'function') {
                     customBeforeSend(xhr, settings);
                 }
-                
+
                 xhr.setRequestHeader('X-AjaxCom', 'true');
                 xhr.setRequestHeader('Accept', 'application/json');
             },
@@ -63,7 +63,7 @@
                 if (typeof customSuccess === 'function') {
                     customSuccess(data, status, xhr);
                 }
-                
+
                 if (data.ajaxcom) {
                     $.each(data.ajaxcom, function(index, operation) {
                         handleOperation(operation);
@@ -77,14 +77,14 @@
                 }
             }
         };
-        
-        
+
+
         options = $.extend(true, {}, $.ajaxSettings, defaults, options);
         return $.ajax(options);
     }
-    
+
     /*
-     * 
+     *
      * param boolean disabled
      * param json options
      */
@@ -113,9 +113,9 @@
         }
 
         // Ignore external links
-        var locationHost = location.port === ""? 
+        var locationHost = location.port === ""?
             location.hostname + ":80" : location.hostname + ":" +  location.port;
-        var linkHost = link.port === ""? 
+        var linkHost = link.port === ""?
             link.hostname + ":80" : link.hostname + ":" + link.port;
         if (location.protocol!==link.protocol || locationHost!==linkHost) {
             return;
@@ -148,7 +148,7 @@
         var form = event.currentTarget;
         //Find the button which launched the event
         var submitButton = $(form).find("[data-ajaxcom-autodisable]");
-        
+
         // Ignore nonform elements
         if (form.tagName.toUpperCase()!=='FORM') {
             return;
@@ -228,13 +228,13 @@
          */
         function twitterbootstrap3() {
             if (options.close === true) {
-                $('.modal').modal('hide');
+                $('.modal').last().modal('hide');
             } else {
                 var $html = $(options.html);
                 $('body').append($html);
-                $('.modal').modal();
+                $('.modal').last().modal();
                 if (options.autoremove) {
-                    $('.modal').on('hidden.bs.modal', function (e) {
+                    $('.modal').last().on('hidden.bs.modal', function (e) {
                         $(this).remove();
                     });
                 }
@@ -324,7 +324,7 @@
             }
         }
         function append() {
-            
+
             if (options.animate===true) {
                 var $element = $(options.value);
                 $element.hide();
@@ -335,7 +335,7 @@
             }
         }
         function prepend() {
-           
+
             if (options.animate===true) {
                 var $element = $(options.value);
                 $element.hide();
