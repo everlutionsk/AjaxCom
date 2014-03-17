@@ -55,9 +55,12 @@ class Handler
      * @var string $type
      * @return FlashMessage
      */
-    public function flashMessage($message, $type = FlashMessage::TYPE_SUCCESS)
-    {
-        $message = new FlashMessage($message, $type);
+    public function flashMessage(
+        $message, 
+        $type = FlashMessage::TYPE_SUCCESS, 
+        $method = FlashMessage::METHOD_APPEND
+    ) {
+        $message = new FlashMessage($message, $type, $method);
         $this->register($message);
         return $message;
     }
