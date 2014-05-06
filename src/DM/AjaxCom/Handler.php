@@ -20,6 +20,16 @@ class Handler
     private $queue = array();
 
     /**
+     * Return true if queue is empty, otherwise false
+     *
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return empty($this->queue);
+    }
+
+    /**
      * Add ResponderInterface object to the queue
      *
      * @var ResponderInterface $responder
