@@ -62,8 +62,6 @@
         delete options.success;
         var customComplete = options.complete;
         delete options.complete;
-        var customAfterComplete = options.afterComplete;
-        delete options.afterComplete;
 
         var defaults = {
             dataType: 'json',
