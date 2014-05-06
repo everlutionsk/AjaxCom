@@ -3,10 +3,27 @@
 (function($) {
     "use strict";
 
+    $.ajaxcomProperties = {isPopstateEvent: false};
+
+    var ajaxcomStackOptions = {};
+    var ajaxcomLastPushId = null;
+
     $.event.props.push('state');
     $(window).on('popstate.ajaxcom', function(event) {
         if (typeof event.state === 'object' && event.state !== null) {
-            window.location.reload();
+            if (event.state.ajaxcomPushId == null || ajaxcomStackOptions[ajaxcomLastPushId] == undefined) {
+                window.location.reload();
+            } else {
+                $.ajaxcomProperties.isPopstateEvent = true;
+                ajaxcomStackOptions[ajaxcomLastPushId]['scrollTop'] = $(document).scrollTop();
+                ajaxcomLastPushId = event.state.ajaxcomPushId;
+
+                ajaxcom(ajaxcomStackOptions[ajaxcomLastPushId]['options']);
+
+                if (ajaxcomStackOptions[ajaxcomLastPushId]['scrollTop'] != null) {
+                    $(document).scrollTop(ajaxcomStackOptions[ajaxcomLastPushId]['scrollTop']);
+                }
+            }
         }
     });
     history && history.replaceState && history.replaceState({}, null);
@@ -38,12 +55,15 @@
     //
     // Returns the same as $.ajax
     function ajaxcom(options) {
+        var ajaxcomOptions = $.extend(true, {}, options);
         var customBeforeSend = options.beforeSend;
         delete options.beforeSend;
         var customSuccess = options.success;
         delete options.success;
         var customComplete = options.complete;
         delete options.complete;
+        var customAfterComplete = options.afterComplete;
+        delete options.afterComplete;
 
         var defaults = {
             dataType: 'json',
@@ -66,7 +86,7 @@
 
                 if (data.ajaxcom) {
                     $.each(data.ajaxcom, function(index, operation) {
-                        handleOperation(operation);
+                        handleOperation(operation, ajaxcomOptions);
                     });
                 }
             },
@@ -75,12 +95,17 @@
                 if (typeof customComplete === 'function') {
                     customComplete(jqXHR, textStatus);
                 }
+
+                $.ajaxcomProperties.isPopstateEvent = false;
             }
         };
 
-
         options = $.extend(true, {}, $.ajaxSettings, defaults, options);
         return $.ajax(options);
+    }
+
+    function ajaxcomIsPopEvent() {
+        return $.ajaxcomProperties.isPopstateEvent;
     }
 
     /*
@@ -175,7 +200,7 @@
     }
 
     // Delegates operations to their handler
-    function handleOperation(operation) {
+    function handleOperation(operation, ajaxcomOptions) {
         switch (operation.operation) {
             case 'container':
                 handleContainer(operation.options)
@@ -184,7 +209,7 @@
                 handleModal(operation.options);
                 break;
             case 'changeurl':
-                handleChangeUrl(operation.options);
+                handleChangeUrl(operation.options, ajaxcomOptions);
                 break;
             case 'callback':
                 handleCallback(operation.options);
@@ -243,11 +268,28 @@
     }
 
     // Handle change urls
-    function handleChangeUrl(options) {
+    function handleChangeUrl(options, ajaxcomOptions) {
         switch (options.method) {
             case 'push':
+                if ($.ajaxcomProperties.isPopstateEvent) {
+                    break;
+                }
+
+                var scrollPosition = $(document).scrollTop();
+
                 setTimeout(function() {
-                    history && history.pushState && history.pushState({}, null, options.url);
+                    if (ajaxcomLastPushId != null) {
+                        ajaxcomStackOptions[ajaxcomLastPushId]['scrollTop'] = scrollPosition;
+                    }
+                    ajaxcomLastPushId = new Date().getTime() + options.url;
+                    ajaxcomStackOptions[ajaxcomLastPushId] = {options: ajaxcomOptions};
+                    history && history.pushState && history.pushState(
+                        {
+                            ajaxcomPushId: ajaxcomLastPushId
+                        },
+                        null,
+                        options.url
+                    );
                 }, options.wait);
                 break;
             case 'replace':
