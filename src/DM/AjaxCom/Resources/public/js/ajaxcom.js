@@ -18,11 +18,14 @@
                 ajaxcomStackOptions[ajaxcomLastPushId]['scrollTop'] = $(document).scrollTop();
                 ajaxcomLastPushId = event.state.ajaxcomPushId;
 
-                ajaxcom(ajaxcomStackOptions[ajaxcomLastPushId]['options']);
-
+                var firstOnComplete = {};
                 if (ajaxcomStackOptions[ajaxcomLastPushId]['scrollTop'] != null) {
-                    $(document).scrollTop(ajaxcomStackOptions[ajaxcomLastPushId]['scrollTop']);
+                    firstOnComplete = {firstOnComplete: function (){
+                        $(document).scrollTop(ajaxcomStackOptions[ajaxcomLastPushId]['scrollTop']);
+                    }};
                 }
+
+                ajaxcom($.extend(true, {}, ajaxcomStackOptions[ajaxcomLastPushId]['options'], firstOnComplete));
             }
         }
     });
@@ -62,6 +65,10 @@
         delete options.success;
         var customComplete = options.complete;
         delete options.complete;
+        if (typeof options.firstOnComplete != 'undefined') {
+            var customFirstOnComplete = options.firstOnComplete;
+            delete options.firstOnComplete;
+        }
 
         var defaults = {
             dataType: 'json',
@@ -90,6 +97,10 @@
             },
             complete : function(jqXHR, textStatus){
                 doAutodisableButton(false, options);
+                if (typeof customFirstOnComplete != 'undefined') {
+                    customFirstOnComplete(jqXHR, textStatus);
+                }
+                customComplete(jqXHR, textStatus);
                 if (typeof customComplete === 'function') {
                     customComplete(jqXHR, textStatus);
                 }
