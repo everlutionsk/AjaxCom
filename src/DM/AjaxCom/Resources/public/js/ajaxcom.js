@@ -100,7 +100,7 @@
                 if (typeof customFirstOnComplete != 'undefined') {
                     customFirstOnComplete(jqXHR, textStatus);
                 }
-                customComplete(jqXHR, textStatus);
+
                 if (typeof customComplete === 'function') {
                     customComplete(jqXHR, textStatus);
                 }
