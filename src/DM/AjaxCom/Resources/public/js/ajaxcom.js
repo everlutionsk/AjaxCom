@@ -287,18 +287,25 @@
                 var scrollPosition = $(document).scrollTop();
 
                 setTimeout(function() {
-                    if (ajaxcomLastPushId != null) {
-                        ajaxcomStackOptions[ajaxcomLastPushId]['scrollTop'] = scrollPosition;
+                    // this condition is needed to prevent form resubmiting
+                    var currentUrlHref = window.location.href;
+                    var currentUrlPath = window.location.pathname;
+                    if (currentUrlHref != options.url
+                        && currentUrlPath != options.url
+                    ) {
+                        if (ajaxcomLastPushId != null) {
+                            ajaxcomStackOptions[ajaxcomLastPushId]['scrollTop'] = scrollPosition;
+                        }
+                        ajaxcomLastPushId = new Date().getTime() + options.url;
+                        ajaxcomStackOptions[ajaxcomLastPushId] = {options: ajaxcomOptions};
+                        history && history.pushState && history.pushState(
+                            {
+                                ajaxcomPushId: ajaxcomLastPushId
+                            },
+                            null,
+                            options.url
+                        );
                     }
-                    ajaxcomLastPushId = new Date().getTime() + options.url;
-                    ajaxcomStackOptions[ajaxcomLastPushId] = {options: ajaxcomOptions};
-                    history && history.pushState && history.pushState(
-                        {
-                            ajaxcomPushId: ajaxcomLastPushId
-                        },
-                        null,
-                        options.url
-                    );
                 }, options.wait);
                 break;
             case 'replace':
