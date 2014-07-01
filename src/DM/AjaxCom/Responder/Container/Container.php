@@ -127,6 +127,12 @@ class Container extends AbstractResponder
         return $this;
     }
 
+    /**
+     * Remove CSS class from container
+     *
+     * @param string $class
+     * @return \Container
+     */
     public function removeClass($class)
     {
         $this->setOption(self::OPTION_METHOD, "removeClass");
@@ -134,6 +140,12 @@ class Container extends AbstractResponder
         return $this;
     }
 
+    /**
+     * Add CSS class to container
+     *
+     * @param string $class
+     * @return \Container
+     */
     public function addClass($class)
     {
         $this->setOption(self::OPTION_METHOD, "addClass");
