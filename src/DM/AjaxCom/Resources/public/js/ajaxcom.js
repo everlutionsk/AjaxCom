@@ -352,6 +352,12 @@
             case 'remove':
                 remove();
                 break;
+            case 'addClass':
+                addClass();
+                break;
+            case 'removeClass':
+                removeClass();
+                break;
             default:
                 throw "Container method " + options.method + " is not supported";
                 break;
