@@ -129,12 +129,14 @@ class Container extends AbstractResponder
 
     public function removeClass($class)
     {
+        $this->setOption(self::OPTION_METHOD, "removeClass");
         $this->setOption(self::OPTION_REMOVE_CLASS, $class);
         return $this;
     }
 
     public function addClass($class)
     {
+        $this->setOption(self::OPTION_METHOD, "addClass");
         $this->setOption(self::OPTION_ADD_CLASS, $class);
         return $this;
     }
