@@ -288,8 +288,8 @@
 
                 setTimeout(function() {
                     // this condition is needed to prevent form resubmiting
-                    var currentUrlHref = window.location.href;
-                    var currentUrlPath = window.location.pathname;
+                    var currentUrlHref = window.location.href + window.location.search;
+                    var currentUrlPath = window.location.pathname + window.location.search;
                     if (currentUrlHref != options.url
                         && currentUrlPath != options.url
                     ) {
