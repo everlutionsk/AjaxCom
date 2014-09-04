@@ -278,6 +278,8 @@
 
     // Handle change urls
     function handleChangeUrl(options, ajaxcomOptions) {
+        var changeUrl = function() {};
+
         switch (options.method) {
             case 'push':
                 if ($.ajaxcomProperties.isPopstateEvent) {
@@ -286,13 +288,13 @@
 
                 var scrollPosition = $(document).scrollTop();
 
-                setTimeout(function() {
+                changeUrl = function() {
                     // this condition is needed to prevent form resubmiting
                     var currentUrlHref = window.location.href + window.location.search;
                     var currentUrlPath = window.location.pathname + window.location.search;
                     if (currentUrlHref != options.url
                         && currentUrlPath != options.url
-                    ) {
+                        ) {
                         if (ajaxcomLastPushId != null) {
                             ajaxcomStackOptions[ajaxcomLastPushId]['scrollTop'] = scrollPosition;
                         }
@@ -306,22 +308,27 @@
                             options.url
                         );
                     }
-                }, options.wait);
+                };
+
                 break;
             case 'replace':
-                setTimeout(function() {
+                changeUrl = function() {
                     history && history.replaceState && history.replaceState({}, null, options.url);
-                }, options.wait);
+                };
+
                 break;
             case 'redirect':
-                setTimeout(function() {
+                changeUrl = function() {
                     window.location.href = options.url;
-                }, options.wait);
+                };
+
                 break;
             default:
                 throw "ChangeUrl method " + options.method + " is not supported";
                 break;
         }
+
+        (options.wait > 0) ? setTimeout(changeUrl(), options.wait) : changeUrl();
     }
 
     // Handle callbacks
