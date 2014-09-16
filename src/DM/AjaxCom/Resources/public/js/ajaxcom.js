@@ -331,7 +331,7 @@
                 break;
         }
 
-        (options.wait > 0) ? setTimeout(changeUrl(), options.wait) : changeUrl();
+        (options.wait > 0) ? setTimeout(changeUrl, options.wait) : changeUrl();
     }
 
     // Handle callbacks
