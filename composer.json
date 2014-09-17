@@ -1,6 +1,6 @@
 {
     "name": "dm/ajaxcom",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "description": "Controls Ajax from PHP",
     "type": "library",
     "keywords": ["ajax"],
