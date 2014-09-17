@@ -77,7 +77,7 @@
                 //Running external definition
 
                 if (typeof customBeforeSend === 'function') {
-                    customBeforeSend(xhr, settings);
+                    customBeforeSend(xhr, settings, options);
                 }
 
                 xhr.setRequestHeader('X-AjaxCom', 'true');
@@ -86,7 +86,7 @@
             success : function(data, status, xhr){
                 //Running external definition
                 if (typeof customSuccess === 'function') {
-                    customSuccess(data, status, xhr);
+                    customSuccess(data, status, xhr, options);
                 }
 
                 if (data.ajaxcom) {
@@ -98,11 +98,11 @@
             complete : function(jqXHR, textStatus){
                 doAutodisableButton(false, options);
                 if (typeof customFirstOnComplete != 'undefined') {
-                    customFirstOnComplete(jqXHR, textStatus);
+                    customFirstOnComplete(jqXHR, textStatus, options);
                 }
 
                 if (typeof customComplete === 'function') {
-                    customComplete(jqXHR, textStatus);
+                    customComplete(jqXHR, textStatus, options);
                 }
 
                 $.ajaxcomProperties.isPopstateEvent = false;
@@ -163,10 +163,12 @@
         // Ignore empty anchors
         if (link.href===location.href + '#') {
             return;
-        }
+
+  }
 
         var defaults = {
-            url: link.href
+            url: link.href,
+            element: event.target
         };
 
         ajaxcom($.extend({}, defaults, options));
@@ -200,7 +202,8 @@
             type: form.method,
             url: form.action,
             data: data,
-            submitButton: submitButton.length > 0? submitButton : null
+            submitButton: submitButton.length > 0? submitButton : null,
+            element: event.target
         };
 
         ajaxcom($.extend({}, defaults, options));
@@ -328,7 +331,7 @@
                 break;
         }
 
-        (options.wait > 0) ? setTimeout(changeUrl(), options.wait) : changeUrl();
+        (options.wait > 0) ? setTimeout(changeUrl, options.wait) : changeUrl();
     }
 
     // Handle callbacks
