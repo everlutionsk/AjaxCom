@@ -19,7 +19,7 @@ http://ajaxcom.everlution.sk/
 - PHP >= 5.3.3
 - jQuery >= 1.7.x
 
-##Installation
+##Installation 
 Via composer:
 
 ``` json
@@ -84,3 +84,4 @@ if (isset($_SERVER['X-AjaxCom'])) {
     // Render page normally
 }
 ```
+
