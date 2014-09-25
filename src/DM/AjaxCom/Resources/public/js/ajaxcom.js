@@ -168,7 +168,7 @@
 
         var defaults = {
             url: link.href,
-            element: event.target
+            element: event.currentTarget
         };
 
         ajaxcom($.extend({}, defaults, options));
@@ -203,7 +203,7 @@
             url: form.action,
             data: data,
             submitButton: submitButton.length > 0? submitButton : null,
-            element: event.target
+            element: event.currentTarget
         };
 
         ajaxcom($.extend({}, defaults, options));
