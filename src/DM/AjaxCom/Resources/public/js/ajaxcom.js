@@ -147,8 +147,17 @@
         }
 
         // Ignore external links
-        var locationHost = location.port === ""?
-            location.hostname + ":80" : location.hostname + ":" +  location.port;
+        var locationHost = "";
+        if (location.port !== "") {
+            locationHost = location.hostname + ":" +  location.port;
+        } else {
+             if (location.protocol == "https:") {
+                locationHost = location.hostname + ":443";
+             } else {
+                locationHost = location.hostname + ":80";
+             }
+        }
+        
         var linkHost = link.port === ""?
             link.hostname + ":80" : link.hostname + ":" + link.port;
         if (location.protocol!==link.protocol || locationHost!==linkHost) {
