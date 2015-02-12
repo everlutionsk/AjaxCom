@@ -157,9 +157,18 @@
                 locationHost = location.hostname + ":80";
              }
         }
-        
-        var linkHost = link.port === ""?
-            link.hostname + ":80" : link.hostname + ":" + link.port;
+
+        var linkHost = "";
+        if (link.port !== "") {
+            linkHost = link.hostname + ":" +  link.port;
+        } else {
+             if (link.protocol == "https:") {
+                linkHost = link.hostname + ":443";
+             } else {
+                linkHost = link.hostname + ":80";
+             }
+        }
+
         if (location.protocol!==link.protocol || locationHost!==linkHost) {
             return;
         }
