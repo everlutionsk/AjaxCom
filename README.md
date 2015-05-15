@@ -1,3 +1,6 @@
+[![Build Status](https://scrutinizer-ci.com/g/everlutionsk/AjaxCom/badges/build.png?b=master)](https://scrutinizer-ci.com/g/everlutionsk/AjaxCom/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/everlutionsk/AjaxCom/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/everlutionsk/AjaxCom/?branch=master)
+
 #AjaxCom
 AjaxCom is a PHP library that allows developers to write their ajax code in PHP with minimal javascript.
 
