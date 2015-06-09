@@ -2,18 +2,15 @@
 
 namespace DM\AjaxCom\Responder;
 
-use DM\AjaxCom\Responder\AbstractResponder;
-
 class Modal extends AbstractResponder
 {
-    
     const OBJECT_IDENTIFIER = 'modal';
- 
+
     const OPTION_TYPE = 'type';
     const OPTION_HTML = 'html';
     const OPTION_CLOSE = 'close';
     const OPTION_AUTOREMOVE = 'autoremove';
-        
+
     const DEFAULT_TYPE = 'twitterbootstrap';
 
     /**
@@ -30,10 +27,10 @@ class Modal extends AbstractResponder
         $this->registerOption(self::OPTION_TYPE);
         $this->registerOption(self::OPTION_CLOSE);
         $this->registerOption(self::OPTION_AUTOREMOVE);
-    
+
         $this->setOption(self::OPTION_HTML, $html);
         $this->setOption(self::OPTION_TYPE, $type);
-        $this->setOption(self::OPTION_AUTOREMOVE, (bool) $autoremove);
+        $this->setOption(self::OPTION_AUTOREMOVE, (bool)$autoremove);
     }
 
     /**
@@ -44,6 +41,7 @@ class Modal extends AbstractResponder
     public function close()
     {
         $this->setOption(self::OPTION_CLOSE, true);
+
         return $this;
     }
 }

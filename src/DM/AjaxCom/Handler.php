@@ -2,16 +2,15 @@
 
 namespace DM\AjaxCom;
 
-use DM\AjaxCom\Responder\Container\FlashMessage;
-use DM\AjaxCom\Responder\Container\Container;
-use DM\AjaxCom\Responder\ChangeUrl;
 use DM\AjaxCom\Responder\Callback;
+use DM\AjaxCom\Responder\ChangeUrl;
+use DM\AjaxCom\Responder\Container\Container;
+use DM\AjaxCom\Responder\Container\FlashMessage;
 use DM\AjaxCom\Responder\Modal;
 use DM\AjaxCom\Responder\ResponderInterface;
 
 class Handler
 {
-
     /**
      * Collection of ResponderInterface objects
      *
@@ -38,6 +37,7 @@ class Handler
     public function register(ResponderInterface $responder)
     {
         $this->queue[] = $responder;
+
         return $this;
     }
 
@@ -50,9 +50,10 @@ class Handler
     public function unregister(ResponderInterface $responder)
     {
         $key = array_search($responder, $this->queue, true);
-        if ($key!==false) {
+        if ($key !== false) {
             unset($this->queue[$key]);
         }
+
         return $this;
     }
 
@@ -62,16 +63,18 @@ class Handler
      * Convenience method to allow for a fluent interface
      *
      * @var string $message
-     * @var string $type
+     * @param string $type
+     * @param string $method
      * @return FlashMessage
      */
     public function flashMessage(
-        $message, 
-        $type = FlashMessage::TYPE_SUCCESS, 
+        $message,
+        $type = FlashMessage::TYPE_SUCCESS,
         $method = FlashMessage::METHOD_APPEND
     ) {
         $message = new FlashMessage($message, $type, $method);
         $this->register($message);
+
         return $message;
     }
 
@@ -87,6 +90,7 @@ class Handler
     {
         $container = new Container($identifier);
         $this->register($container);
+
         return $container;
     }
 
@@ -103,6 +107,7 @@ class Handler
     {
         $modal = new Modal($html, $type);
         $this->register($modal);
+
         return $modal;
     }
 
@@ -119,6 +124,7 @@ class Handler
     {
         $callback = new Callback($function, $params);
         $this->register($callback);
+
         return $callback;
     }
 
@@ -136,23 +142,22 @@ class Handler
     {
         $changeUrl = new ChangeUrl($url, $method, $wait);
         $this->register($changeUrl);
+
         return $changeUrl;
     }
 
     /**
      * Generates response
-     *
-     * @return
+     * @return array
      */
-
     public function respond()
     {
         $response = array();
- 
+
         foreach ($this->queue as $object) {
             $response[] = $object->render();
         }
-        
-        return array('ajaxcom'=>$response);
+
+        return array('ajaxcom' => $response);
     }
 }
