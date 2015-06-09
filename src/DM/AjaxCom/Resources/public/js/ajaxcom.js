@@ -386,6 +386,9 @@
             case 'removeClass':
                 removeClass();
                 break;
+            case 'attr':
+                attr();
+                break;
             default:
                 throw "Container method " + options.method + " is not supported";
                 break;
@@ -415,6 +418,7 @@
                 $(options.target).replaceWith($element.show());
             }
         }
+
         function append() {
 
             if (options.animate===true) {
@@ -426,6 +430,7 @@
                 $(options.target).append(options.value);
             }
         }
+
         function prepend() {
 
             if (options.animate===true) {
@@ -437,6 +442,7 @@
                 $(options.target).prepend(options.value);
             }
         }
+
         function html() {
             if (options.animate===true) {
                 $(options.target).fadeOut(600, function() {
@@ -451,11 +457,13 @@
                 addClass();
             }
         }
+
         function val() {
             $(options.target).val(options.value);
             removeClass();
             addClass();
         }
+
         function remove() {
             if (options.animate===true) {
                 $(options.target).fadeOut(600, function() {
@@ -464,6 +472,10 @@
             } else {
                 $(options.target).remove();
             }
+        }
+
+        function attr() {
+            $(options.target).attr(options.attr, options.value);
         }
     }
 

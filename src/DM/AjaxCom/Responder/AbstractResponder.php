@@ -2,11 +2,8 @@
 
 namespace DM\AjaxCom\Responder;
 
-use DM\AjaxCom\Responder\ResponderInterface;
-
 abstract class AbstractResponder implements ResponderInterface
 {
-
     const OBJECT_IDENTIFIER = null;
 
     /**
@@ -15,25 +12,23 @@ abstract class AbstractResponder implements ResponderInterface
     private $validOptions = array();
 
     /**
-     * @var string operation - identifier of the object
+     * @var array
      */
-    private $operation = null;
-
     private $options = array();
-
 
     /**
      * Sets value to the option of the operation
      *
      * @var string $option
      * @var string $value
-     * @return ResponseObject
+     * @return ResponderInterface
      */
     public function setOption($option, $value)
     {
         if ($this->isValidOption($option)) {
             $this->options[$option] = $value;
         }
+
         return $this;
     }
 
@@ -41,7 +36,7 @@ abstract class AbstractResponder implements ResponderInterface
      * Sets values to the options of the operation
      *
      * @var array $option
-     * @return ResponseObject
+     * @return ResponderInterface
      */
     public function setOptions(array $options)
     {
@@ -50,6 +45,7 @@ abstract class AbstractResponder implements ResponderInterface
                 $this->options[$key] = $value;
             }
         }
+
         return $this;
     }
 
@@ -68,12 +64,14 @@ abstract class AbstractResponder implements ResponderInterface
      *
      * @var string $option
      * @return string value
+     * @throws \Exception
      */
     public function getOption($option)
     {
         if (!isset($this->options[$option])) {
             throw new \Exception('This option does not exist');
         }
+
         return $this->options[$option];
     }
 
@@ -81,7 +79,8 @@ abstract class AbstractResponder implements ResponderInterface
      * Validates a option comparing it to the registered options of the responseobject
      *
      * @var array $option
-     * @return boolean
+     * @return bool
+     * @throws \Exception
      */
     private function isValidOption($option)
     {
@@ -96,32 +95,33 @@ abstract class AbstractResponder implements ResponderInterface
      * registers an option from the response object
      *
      * @var array $option
-     * @return ResponseObject
+     * @return ResponderInterface
      */
     protected function registerOption($option)
     {
         if (!in_array($option, $this->validOptions)) {
             array_push($this->validOptions, $option);
         }
+
         return $this;
     }
 
 
-
     /**
-     * Render the opperation item
-     *
-     * @return opperation item
+     * Render the operation item
+     * @return string operation item
+     * @throws \Exception
      */
     public function render()
     {
         if (!$this::OBJECT_IDENTIFIER) {
             throw new \Exception('No operation was set');
         }
-        
-        $operation = array( 'operation' => $this::OBJECT_IDENTIFIER,
-                            'options' => $this->options
-                        );
+
+        $operation = array(
+            'operation' => $this::OBJECT_IDENTIFIER,
+            'options' => $this->options
+        );
 
         return $operation;
     }
