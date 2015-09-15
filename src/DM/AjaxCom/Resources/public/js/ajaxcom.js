@@ -5,6 +5,14 @@
 
     $.ajaxcomProperties = {isPopstateEvent: false};
 
+    /**
+     * Contains recently used submit button, which has non empty "name" attribute.
+     * Variable is set to null after form is submitted.
+     *
+     * @type {HTMLButtonElement}
+     */
+    var lastUsedIdentifiableSubmitButton = null;
+
     var ajaxcomStackOptions = {};
     var ajaxcomLastPushId = null;
 
@@ -49,6 +57,12 @@
             var opts = $.extend({}, options);
             handleSubmit(event, opts);
         });
+        this.on('click', 'form [type=submit][name]', function(event) {
+            if (event.target.name !== '') {
+                lastUsedIdentifiableSubmitButton = event.target;
+            }
+        });
+
         return this;
     }
 
@@ -209,6 +223,17 @@
         }
 
         var data = $(form).serializeArray();
+
+        // If form has been submitted by submit button with name,
+        // then info about this button will be added into data variable.
+        if (lastUsedIdentifiableSubmitButton != null) {
+            data.push({
+                name: lastUsedIdentifiableSubmitButton.name,
+                value: ''
+            });
+            lastUsedIdentifiableSubmitButton = null;
+        }
+
         $(form).find('input[type=file]').each(function(index, value) {
             data.push({
                 name: $(value).attr('name'),
