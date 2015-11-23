@@ -419,6 +419,10 @@
                 break;
         }
 
+        $(options.target).find('script').each(function(i) {
+            eval($(this).text());
+        });
+
         function removeClass() {
             if (options.removeClass) {
                 $(options.target).removeClass(options.removeClass);
