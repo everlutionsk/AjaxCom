@@ -119,6 +119,12 @@
                     customComplete(jqXHR, textStatus, options);
                 }
 
+                // open up profiler on error response in debug mode
+                var sf = $('.sf-toolbar .sf-ajax-request-error');
+                if (textStatus == 'error' && sf.length) {
+                    window.location.href = sf.find('a:last').attr('href') + '?panel=exception';
+                }
+
                 $.ajaxcomProperties.isPopstateEvent = false;
             }
         };
