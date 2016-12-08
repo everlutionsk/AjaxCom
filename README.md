@@ -80,7 +80,7 @@ if (isset($_SERVER['X-AjaxCom'])) {
     );
     
     // NOTE: It is important to call callback() AFTER container() or modal()
-    // when you are affecting the rendered HTML inside the callback
+    // when you are manipulating the rendered DOM inside the callback;
     // otherwise the callback will be called before elements of DOM are loaded
     
     // Call funcname()
@@ -88,7 +88,7 @@ if (isset($_SERVER['X-AjaxCom'])) {
     // Call namespace.funcname()
     $handler->callback('namespace.funcname');
     // You can also specify parameters which will be passed as object to the funcion
-    $handler->callback('namespace.funcname', ['this' => 'will', 'be' => 'passed', 'as' => 'object', 'to' => 'function']);
+    $handler->callback('namespace.funcname', ['this' => 'will', 'be' => 'passed', 'as' => 'an object', 'to' => 'the function']);
     
 
     header('Content-type: application/json');
