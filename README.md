@@ -56,8 +56,6 @@ if (isset($_SERVER['X-AjaxCom'])) {
     $handler = new Handler();
     // Change URL to /newurl
     $handler->changeUrl('/newurl');
-    // Call funcname()
-    $handler->callback('funcname');
     // Append some html to an element
     $handler->container('#table')
         ->append('<tr><td>This is a new row</td></tr>');
@@ -80,6 +78,18 @@ if (isset($_SERVER['X-AjaxCom'])) {
             </div>
         </div>'
     );
+    
+    // NOTE: It is important to call callback() AFTER container() or modal()
+    // when you are manipulating the rendered DOM inside the callback;
+    // otherwise the callback will be called before elements of DOM are loaded
+    
+    // Call funcname()
+    $handler->callback('funcname');
+    // Call namespace.funcname()
+    $handler->callback('namespace.funcname');
+    // You can also specify parameters which will be passed as object to the funcion
+    $handler->callback('namespace.funcname', ['this' => 'will', 'be' => 'passed', 'as' => 'an object', 'to' => 'the function']);
+    
 
     header('Content-type: application/json');
     echo json_encode($handler->respond());

@@ -379,8 +379,15 @@
 
     // Handle callbacks
     function handleCallback(options) {
-        if ($.isFunction(window[options.callFunction])) {
-            window[options.callFunction](options.params);
+        var namespaces = options.callFunction.split('.');
+        var context = window;
+
+        namespaces.forEach(function (item) {
+            context = context[item];
+        });
+
+        if ($.isFunction(context)) {
+            context(options.params);
         }
     }
 
