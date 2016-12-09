@@ -94,6 +94,10 @@
                     customBeforeSend(xhr, settings, options);
                 }
 
+                if (typeof NProgress === 'object') {
+                    NProgress.start();
+                }
+
                 xhr.setRequestHeader('X-AjaxCom', 'true');
                 xhr.setRequestHeader('Accept', 'application/json');
             },
@@ -117,6 +121,10 @@
 
                 if (typeof customComplete === 'function') {
                     customComplete(jqXHR, textStatus, options);
+                }
+
+                if (typeof NProgress === 'object') {
+                    NProgress.done();
                 }
 
                 $.ajaxcomProperties.isPopstateEvent = false;
@@ -165,22 +173,22 @@
         if (location.port !== "") {
             locationHost = location.hostname + ":" +  location.port;
         } else {
-             if (location.protocol == "https:") {
+            if (location.protocol == "https:") {
                 locationHost = location.hostname + ":443";
-             } else {
+            } else {
                 locationHost = location.hostname + ":80";
-             }
+            }
         }
 
         var linkHost = "";
         if (link.port !== "") {
             linkHost = link.hostname + ":" +  link.port;
         } else {
-             if (link.protocol == "https:") {
+            if (link.protocol == "https:") {
                 linkHost = link.hostname + ":443";
-             } else {
+            } else {
                 linkHost = link.hostname + ":80";
-             }
+            }
         }
 
         if (location.protocol!==link.protocol || locationHost!==linkHost) {
@@ -196,7 +204,7 @@
         if (link.href===location.href + '#') {
             return;
 
-  }
+        }
 
         var defaults = {
             url: link.href,
@@ -340,7 +348,7 @@
                     var currentUrlPath = window.location.pathname + window.location.search;
                     if (currentUrlHref != options.url
                         && currentUrlPath != options.url
-                        ) {
+                    ) {
                         if (ajaxcomLastPushId != null) {
                             ajaxcomStackOptions[ajaxcomLastPushId]['scrollTop'] = scrollPosition;
                         }
