@@ -16,7 +16,7 @@
     var ajaxcomStackOptions = {};
     var ajaxcomLastPushId = null;
 
-    $.event.props.push('state');
+    initEventState();
     $(window).on('popstate.ajaxcom', function(event) {
         if (typeof event.state === 'object' && event.state !== null) {
             if (event.state.ajaxcomPushId == null || ajaxcomStackOptions[ajaxcomLastPushId] == undefined) {
@@ -39,6 +39,16 @@
     });
     history && history.replaceState && history.replaceState({}, null);
 
+    function initEventState() {
+        // jQuery 3.* compatibility
+        if (typeof $.event.props === 'object') {
+            $.event.props.push('state');
+            return;
+        }
+        
+        $.event.addProp('state');
+    }
+    
     // Intercept click and submit events and perform an ajax request then
     // handle instructions returned
     //
@@ -284,6 +294,9 @@
             case 'twitterbootstrap3':
                 twitterbootstrap3();
                 break;
+            case 'materialize':
+                materialize();
+                break;
             default:
                 throw "Modal type " + options.type + " is not supported";
                 break;
@@ -320,6 +333,24 @@
                 }
             }
         }
+        
+        function materialize() {
+            if (options.close === true) {
+                $('.modal').last().modal('close');
+            } else {
+                var $html = $(options.html);
+                $('body').append($html);
+                var modal = $('.modal').last();
+                modal.modal({
+                    complete: function () {
+                        if (options.autoremove) {
+                            $(this).remove();
+                        }
+                    }
+                });
+                modal.modal('open');
+            }
+        }        
     }
 
     // Handle change urls
