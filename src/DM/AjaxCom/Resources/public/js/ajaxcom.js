@@ -16,7 +16,12 @@
     var ajaxcomStackOptions = {};
     var ajaxcomLastPushId = null;
 
-    $.event.props.push('state');
+    // jQuery 3.* compatibility
+    if (typeof $.event.props === 'object') {
+        $.event.props.push('state');
+    } else {
+        $.event.addProp('state');
+    }
     $(window).on('popstate.ajaxcom', function(event) {
         if (typeof event.state === 'object' && event.state !== null) {
             if (event.state.ajaxcomPushId == null || ajaxcomStackOptions[ajaxcomLastPushId] == undefined) {
@@ -284,6 +289,9 @@
             case 'twitterbootstrap3':
                 twitterbootstrap3();
                 break;
+            case 'materialize':
+                materialize();
+                break;
             default:
                 throw "Modal type " + options.type + " is not supported";
                 break;
@@ -320,6 +328,24 @@
                 }
             }
         }
+        
+        function materialize() {
+            if (options.close === true) {
+                $('.modal').last().modal('close');
+            } else {
+                var $html = $(options.html);
+                $('body').append($html);
+                var modal = $('.modal').last();
+                modal.modal({
+                    complete: function () {
+                        if (options.autoremove) {
+                            $(this).remove();
+                        }
+                    }
+                });
+                modal.modal('open');
+            }
+        }        
     }
 
     // Handle change urls
