@@ -16,12 +16,7 @@
     var ajaxcomStackOptions = {};
     var ajaxcomLastPushId = null;
 
-    // jQuery 3.* compatibility
-    if (typeof $.event.props === 'object') {
-        $.event.props.push('state');
-    } else {
-        $.event.addProp('state');
-    }
+    initEventState();
     $(window).on('popstate.ajaxcom', function(event) {
         if (typeof event.state === 'object' && event.state !== null) {
             if (event.state.ajaxcomPushId == null || ajaxcomStackOptions[ajaxcomLastPushId] == undefined) {
@@ -44,6 +39,16 @@
     });
     history && history.replaceState && history.replaceState({}, null);
 
+    function initEventState() {
+        // jQuery 3.* compatibility
+        if (typeof $.event.props === 'object') {
+            $.event.props.push('state');
+            return;
+        }
+        
+        $.event.addProp('state');
+    }
+    
     // Intercept click and submit events and perform an ajax request then
     // handle instructions returned
     //
