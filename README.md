@@ -1,13 +1,13 @@
 [![Build Status](https://scrutinizer-ci.com/g/everlutionsk/AjaxCom/badges/build.png?b=master)](https://scrutinizer-ci.com/g/everlutionsk/AjaxCom/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/everlutionsk/AjaxCom/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/everlutionsk/AjaxCom/?branch=master)
 
-#AjaxCom
+# AjaxCom
 AjaxCom is a PHP library that allows developers to write their ajax code in PHP with minimal javascript.
 
-###Demo
+### Demo
 http://ajaxcom.everlution.sk/
 
-##Features
+## Features
 - Append html to elements
 - Prepend html to elements
 - Replace elements with new html
@@ -18,11 +18,11 @@ http://ajaxcom.everlution.sk/
 - Change URL
 - Call functions
 
-##Requirements
+## Requirements
 - PHP >= 5.3.3
 - jQuery >= 1.7.x
 
-##Installation 
+## Installation 
 Via composer:
 
 ``` json
@@ -33,8 +33,8 @@ Via composer:
 }
 ```
 
-##Usage
-###Javascript
+## Usage
+### Javascript
 Include the javascript library located at `src/DM/AjaxCom/Resources/public/js/ajaxcom.js`
 
 Intercept all click events on anchors and submit events on forms:
@@ -47,7 +47,7 @@ Or just intercept those which have `data-ajaxcom`
 $(document).ajaxcom('[data-ajaxcom]');
 ```
 
-###PHP
+### PHP
 ``` php
 use DM\AjaxCom\Handler;
 
