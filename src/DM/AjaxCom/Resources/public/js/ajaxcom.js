@@ -232,7 +232,7 @@
             return;
         }
 
-        var data = $(form).serializeArray();
+        var data = new FormData(form);
 
         // If form has been submitted by submit button with name,
         // then info about this button will be added into data variable.
@@ -244,18 +244,14 @@
             lastUsedIdentifiableSubmitButton = null;
         }
 
-        $(form).find('input[type=file]').each(function(index, value) {
-            data.push({
-                name: $(value).attr('name'),
-                value: $(value).val()
-            });
-        });
-
         var defaults = {
             type: form.method,
             url: form.action,
             data: data,
-            submitButton: submitButton.length > 0? submitButton : null,
+            processData: false,
+            contentType: false,
+            cache: false,
+            submitButton: submitButton.length > 0 ? submitButton : null,
             element: event.currentTarget
         };
 
