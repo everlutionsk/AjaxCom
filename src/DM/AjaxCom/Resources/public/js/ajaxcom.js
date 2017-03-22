@@ -237,10 +237,7 @@
         // If form has been submitted by submit button with name,
         // then info about this button will be added into data variable.
         if (lastUsedIdentifiableSubmitButton != null) {
-            data.push({
-                name: lastUsedIdentifiableSubmitButton.name,
-                value: ''
-            });
+            data.append(lastUsedIdentifiableSubmitButton.name, '');
             lastUsedIdentifiableSubmitButton = null;
         }
 
