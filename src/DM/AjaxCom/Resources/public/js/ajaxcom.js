@@ -45,10 +45,10 @@
             $.event.props.push('state');
             return;
         }
-        
+
         $.event.addProp('state');
     }
-    
+
     // Intercept click and submit events and perform an ajax request then
     // handle instructions returned
     //
@@ -224,21 +224,47 @@
     function handleSubmit(event, options)
     {
         var form = event.currentTarget;
+        var $form = $(form);
         //Find the button which launched the event
-        var submitButton = $(form).find("[data-ajaxcom-autodisable]");
+        var submitButton = $form.find("[data-ajaxcom-autodisable]");
 
         // Ignore nonform elements
         if (form.tagName.toUpperCase()!=='FORM') {
             return;
         }
 
-        var data = new FormData(form);
+        var data;
+        // For method type GET use serialized array
+        if (form.method.toUpperCase() === 'GET') {
+            data = $form.serializeArray();
 
-        // If form has been submitted by submit button with name,
-        // then info about this button will be added into data variable.
-        if (lastUsedIdentifiableSubmitButton != null) {
-            data.append(lastUsedIdentifiableSubmitButton.name, '');
-            lastUsedIdentifiableSubmitButton = null;
+            // If form has been submitted by submit button with name,
+            // then info about this button will be added into data variable.
+            if (lastUsedIdentifiableSubmitButton !== null) {
+                data.push({
+                    name: lastUsedIdentifiableSubmitButton.name,
+                    value: ''
+                });
+                lastUsedIdentifiableSubmitButton = null;
+            }
+
+            $form.find('input[type=file]').each(function(index, value) {
+                data.push({
+                    name: $(value).attr('name'),
+                    value: $(value).val()
+                });
+            });
+
+            data = $.param(data);
+        } else {
+            data = new FormData(form);
+
+            // If form has been submitted by submit button with name,
+            // then info about this button will be added into data variable.
+            if (lastUsedIdentifiableSubmitButton !== null) {
+                data.append(lastUsedIdentifiableSubmitButton.name, '');
+                lastUsedIdentifiableSubmitButton = null;
+            }
         }
 
         var defaults = {
@@ -326,7 +352,7 @@
                 }
             }
         }
-        
+
         function materialize() {
             if (options.close === true) {
                 $('.modal').last().modal('close');
@@ -343,7 +369,7 @@
                 });
                 modal.modal('open');
             }
-        }        
+        }
     }
 
     // Handle change urls
