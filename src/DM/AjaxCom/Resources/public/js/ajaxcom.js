@@ -45,10 +45,10 @@
             $.event.props.push('state');
             return;
         }
-        
+
         $.event.addProp('state');
     }
-    
+
     // Intercept click and submit events and perform an ajax request then
     // handle instructions returned
     //
@@ -223,18 +223,19 @@
     // Exported as $.ajaxcom.submit
     function handleSubmit(event, options)
     {
-        var $form = $(event.currentTarget);
+        var form = event.currentTarget;
+        var $form = $(form);
         //Find the button which launched the event
         var submitButton = $form.find("[data-ajaxcom-autodisable]");
 
         // Ignore nonform elements
-        if ($form.tagName.toUpperCase()!=='FORM') {
+        if (form.tagName.toUpperCase()!=='FORM') {
             return;
         }
 
         var data;
         // For method type GET use serialized array
-        if ($form.action.toUpperCase() === 'GET') {
+        if (form.method.toUpperCase() === 'GET') {
             data = $form.serializeArray();
 
             // If form has been submitted by submit button with name,
@@ -256,7 +257,7 @@
 
             data = $.param(data);
         } else {
-            data = new FormData($form.get(0));
+            data = new FormData(form);
 
             // If form has been submitted by submit button with name,
             // then info about this button will be added into data variable.
@@ -267,8 +268,8 @@
         }
 
         var defaults = {
-            type: $form.method,
-            url: $form.action,
+            type: form.method,
+            url: form.action,
             data: data,
             processData: false,
             contentType: false,
@@ -351,7 +352,7 @@
                 }
             }
         }
-        
+
         function materialize() {
             if (options.close === true) {
                 $('.modal').last().modal('close');
@@ -368,7 +369,7 @@
                 });
                 modal.modal('open');
             }
-        }        
+        }
     }
 
     // Handle change urls
