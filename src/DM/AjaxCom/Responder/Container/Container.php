@@ -69,7 +69,7 @@ class Container extends AbstractResponder
     }
 
     /**
-     * Replace container html with this html
+     * Replace container html with this html and animate
      *
      * @var string $html
      * @return Container
@@ -78,6 +78,21 @@ class Container extends AbstractResponder
     {
         $this->setOption(self::OPTION_VALUE, $html);
         $this->setOption(self::OPTION_METHOD, 'replaceWith');
+
+        return $this;
+    }
+
+    /**
+     * Replace container html with this html without animation
+     * Keeps element display property
+     *
+     * @var string $html
+     * @return Container
+     */
+    public function replace($html)
+    {
+        $this->setOption(self::OPTION_VALUE, $html);
+        $this->setOption(self::OPTION_METHOD, 'replace');
 
         return $this;
     }
