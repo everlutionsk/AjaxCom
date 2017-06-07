@@ -421,6 +421,9 @@
             case 'replaceWith':
                 replaceWith();
                 break;
+            case 'replace':
+                replace();
+                break;
             case 'append':
                 append();
                 break;
@@ -473,6 +476,11 @@
             } else {
                 $(options.target).replaceWith($element.show());
             }
+        }
+
+        function replace() {
+            var $element = $(options.value);
+            $(options.target).replaceWith($element);
         }
 
         function append() {
