@@ -361,9 +361,9 @@
                 $('body').append($html);
                 var modal = $('.modal').last();
                 modal.modal({
-                    complete: function () {
+                    complete: function (e) {
                         if (options.autoremove) {
-                            $(this).remove();
+                            e.remove();
                         }
                     }
                 });
